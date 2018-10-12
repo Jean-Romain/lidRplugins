@@ -54,7 +54,6 @@ detected tree if there is no detected tree within a given 2D distance as well as
 }
 }
 \examples{
-\dontrun{
 LASfile <- system.file("extdata", "MixedConifer.laz", package="lidR")
 las = readLAS(LASfile)
 
@@ -62,7 +61,6 @@ ttops = tree_detection(las, multichm(res = 1, ws = 5))
 
 plot(las)
 rgl::spheres3d(ttops@coords[,1], ttops@coords[,2], ttops@data$Z, col = "red", size = 5, add = TRUE)
-}
 }
 \references{
 Eysn, L., Hollaus, M., Lindberg, E., Berger, F., Monnet, J. M., Dalponte, M., … Pfeifer, N. (2015).

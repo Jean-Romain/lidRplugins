@@ -150,7 +150,6 @@ ptrees = function(k, hmin = 2, nmax = 7L)
 #' @family individual tree detection algorithms
 #'
 #' @examples
-#' \dontrun{
 #' LASfile <- system.file("extdata", "MixedConifer.laz", package="lidR")
 #' las = readLAS(LASfile)
 #'
@@ -158,7 +157,6 @@ ptrees = function(k, hmin = 2, nmax = 7L)
 #'
 #' plot(las)
 #' rgl::spheres3d(ttops@coords[,1], ttops@coords[,2], ttops@data$Z, col = "red", size = 5, add = TRUE)
-#' }
 multichm = function(res = 1, layer_thickness = 0.5, dist_2d = 3, dist_3d = 5, use_max = FALSE, ...)
 {
   assertive::assert_is_a_number(res)
@@ -240,6 +238,39 @@ multichm = function(res = 1, layer_thickness = 0.5, dist_2d = 3, dist_3d = 5, us
 
 # ===== LMFX ======
 
+#' Individual Tree Detection Algorithm
+#'
+#' This function is made to be used in \link[lidR:tree_detection]{tree_detection}. It implements an
+#' experimental algorithms for tree detection based on a several ideas from the litterature. First it
+#' select the highest points in each cell of a 1 m grid to reduce the amount of data and considerably
+#' improve speed, then it performs a local maximum filter to find tree tops. To finish it applies the
+#' filtering rule from \link{multichm} (step (b))
+#'
+#' @param ws numeric or function. Length or diameter of the moving window used to the detect the local
+#' maxima in the unit of the input data (usually meters). If it is numeric a fixed windows size is used.
+#' If it is a function, the function determines the size of the window at any given location on the canopy.
+#' The function should take the height of a given pixel or points as its only argument and return the
+#' desired size of the search window when centered on that pixel/point.
+#'
+#' @param hmin numeric. Minimum height of a tree. Threshold below which a pixel or a point
+#' cannot be a local maxima. Default 2.
+#'
+#' @param dist_2d numeric. 2D distance threshold. A local maximum is considered a detected tree
+#' if there is no detected tree within this 2D distance.
+#'
+#' @param dist_3d numeric. 3D distance threshold. A local maximum is considered a detected tree
+#' if there is no detected tree within this 3D distance.
+#'
+#' @export
+#'
+#' @examples
+#' LASfile <- system.file("extdata", "MixedConifer.laz", package="lidR")
+#' las = readLAS(LASfile)
+#'
+#' ttops = tree_detection(las, lmfx(ws = 3))
+#'
+#' plot(las)
+#' rgl::spheres3d(ttops@coords[,1], ttops@coords[,2], ttops@data$Z, col = "red", size = 5, add = TRUE)
 lmfx = function(ws, hmin = 2, dist_2d = 3, dist_3d = 5)
 {
   f = function(las)
@@ -270,24 +301,29 @@ lmfx = function(ws, hmin = 2, dist_2d = 3, dist_3d = 5)
       stop("'ws' must be a number or a function", call. = FALSE)
 
     . <- X <- Y <- Z <- treeID <- NULL
+
+    las = lidR::lasfilterdecimate(las, lidR::highest(1))
     is_maxima = lidR:::C_LocalMaximumFilter(las@data, ws, hmin, TRUE)
     LM = las@data[is_maxima, .(X,Y,Z)]
 
     data.table::setorder(LM, -Z)
+    LM <- unique(LM, by = c("X", "Y"))
 
-    detected = LM[1,.(X,Y,Z)]
-
-    knn = with(detected, C_knn(X,Y,X,Y,2))
+    detected = logical(nrow(LM))
+    detected[1] = TRUE
 
     for (i in 2:nrow(LM))
     {
-      distance2D = (LM$X[i] - detected$X)^2 + (LM$Y[i] - detected$Y)^2
-      distance3D = distance2D + (LM$Z[i] - detected$Z)^2
+      distance2D = (LM$X[i] - LM$X[detected])^2 + (LM$Y[i] - LM$Y[detected])^2
+      distance3D = distance2D + (LM$Z[i] - LM$Z[detected])^2
 
       if (!any(distance2D < dist_2d) & !any(distance3D < dist_3d))
-        detected = rbind(detected, data.table::data.table(X = LM$X[i], Y = LM$Y[i], Z = LM$X[i]))
+      {
+        detected[i] = TRUE
+      }
     }
 
+    detected = LM[detected]
     detected[, treeID := 1:.N]
 
     output = sp::SpatialPointsDataFrame(detected[, .(X,Y)], detected[, .(treeID, Z)])
