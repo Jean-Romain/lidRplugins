@@ -4,7 +4,7 @@
 \alias{lmfx}
 \title{Individual Tree Detection Algorithm}
 \usage{
-lmfx(ws, hmin = 2, dist_2d = 3, dist_3d = 5)
+lmfx(ws, hmin = 2, dist_2d = 3)
 }
 \arguments{
 \item{ws}{numeric or function. Length or diameter of the moving window used to the detect the local
@@ -18,9 +18,6 @@ cannot be a local maxima. Default 2.}
 
 \item{dist_2d}{numeric. 2D distance threshold. A local maximum is considered a detected tree
 if there is no detected tree within this 2D distance.}
-
-\item{dist_3d}{numeric. 3D distance threshold. A local maximum is considered a detected tree
-if there is no detected tree within this 3D distance.}
 }
 \description{
 This function is made to be used in \link[lidR:tree_detection]{tree_detection}. It implements an

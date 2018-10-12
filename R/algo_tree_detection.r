@@ -258,9 +258,6 @@ multichm = function(res = 1, layer_thickness = 0.5, dist_2d = 3, dist_3d = 5, us
 #' @param dist_2d numeric. 2D distance threshold. A local maximum is considered a detected tree
 #' if there is no detected tree within this 2D distance.
 #'
-#' @param dist_3d numeric. 3D distance threshold. A local maximum is considered a detected tree
-#' if there is no detected tree within this 3D distance.
-#'
 #' @export
 #'
 #' @examples
@@ -271,7 +268,7 @@ multichm = function(res = 1, layer_thickness = 0.5, dist_2d = 3, dist_3d = 5, us
 #'
 #' plot(las)
 #' rgl::spheres3d(ttops@coords[,1], ttops@coords[,2], ttops@data$Z, col = "red", size = 5, add = TRUE)
-lmfx = function(ws, hmin = 2, dist_2d = 3, dist_3d = 5)
+lmfx = function(ws, hmin = 2, dist_2d = 3)
 {
   f = function(las)
   {
@@ -281,7 +278,6 @@ lmfx = function(ws, hmin = 2, dist_2d = 3, dist_3d = 5)
     . <- X <- Y <- Z <- treeID <- NULL
 
     dist_2d = dist_2d^2
-    dist_3d = dist_3d^2
 
     if (assertive::is_a_number(ws))
     {
@@ -301,13 +297,11 @@ lmfx = function(ws, hmin = 2, dist_2d = 3, dist_3d = 5)
       stop("'ws' must be a number or a function", call. = FALSE)
 
     . <- X <- Y <- Z <- treeID <- NULL
-
     las = lidR::lasfilterdecimate(las, lidR::highest(1))
     is_maxima = lidR:::C_LocalMaximumFilter(las@data, ws, hmin, TRUE)
     LM = las@data[is_maxima, .(X,Y,Z)]
 
     data.table::setorder(LM, -Z)
-    LM <- unique(LM, by = c("X", "Y"))
 
     detected = logical(nrow(LM))
     detected[1] = TRUE
@@ -315,9 +309,9 @@ lmfx = function(ws, hmin = 2, dist_2d = 3, dist_3d = 5)
     for (i in 2:nrow(LM))
     {
       distance2D = (LM$X[i] - LM$X[detected])^2 + (LM$Y[i] - LM$Y[detected])^2
-      distance3D = distance2D + (LM$Z[i] - LM$Z[detected])^2
+      #distance3D = distance2D + (LM$Z[i] - LM$Z[detected])^2
 
-      if (!any(distance2D < dist_2d) & !any(distance3D < dist_3d))
+      if (!any(distance2D < dist_2d))# & !any(distance3D < dist_3d))
       {
         detected[i] = TRUE
       }
@@ -326,7 +320,7 @@ lmfx = function(ws, hmin = 2, dist_2d = 3, dist_3d = 5)
     detected = LM[detected]
     detected[, treeID := 1:.N]
 
-    output = sp::SpatialPointsDataFrame(detected[, .(X,Y)], detected[, .(treeID, Z)])
+    output = sp::SpatialPointsDataFrame(detected[, 1:2], detected[, 3:4])
     output@proj4string = las@proj4string
     output@bbox = sp::bbox(las)
     return(output)
