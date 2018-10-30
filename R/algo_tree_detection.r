@@ -198,7 +198,7 @@ multichm = function(res = 1, layer_thickness = 0.5, dist_2d = 3, dist_3d = 5, us
         lm       <- raster::as.data.frame(lm)
         data.table::setDT(lm)
         LM[[i]]  <- lm
-        las_copy <- lidR::lasclassify(las_copy, chm95, "chm95")
+        las_copy <- lidR::lasmergespatial(las_copy, chm95, "chm95")
         las_copy <- lidR::lasfilter(las_copy, Z < chm95 - layer_thickness)
 
         i <- i + 1
