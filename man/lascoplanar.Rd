@@ -24,10 +24,10 @@ that indicates those points that are part of a neighborhood that is approximatel
 An approximate coplanarity test. For each point it looks for the k-nearest neighbors. It computes the
 eigenvalues of the covariance matrix. The points that meet the following criteria are labeled as
 approximately coplanar:\cr
-\deqn{λ_2 > (th_1*λ_1) && (th_2*λ_2) > λ_3}
-\eqn{λ_1, λ_2, λ_3} are the eigenvalues of a neighborhood of points (defined by k-nearest neighbors)
+\deqn{a_2 > (th_1*a_1) && (th_2*a_2) > a_3}
+\eqn{a_1, a_2, a_3} are the eigenvalues of a neighborhood of points (defined by k-nearest neighbors)
 in ascending order.\cr\cr
 If \code{th2 = 0} the function turns to be a colinearity test. The points that meet the following criteria are labeled as
 approximately colinear:\cr
-\deqn{th_1*λ_2 < λ_3 && (th_1*λ_1) < λ_3}
+\deqn{th_1*a_2 < a_3 && (th_1*a_1) < a_3}
 }
