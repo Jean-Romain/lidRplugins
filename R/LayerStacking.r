@@ -27,7 +27,7 @@ LayerStacking = function(start = 0.5, res = 1, ws1 = 3, ws2 = 1.5, buf_size = 0.
   f = function(las)
   {
     context <- tryCatch({get("lidR.context", envir = parent.frame())}, error = function(e) {return(NULL)})
-    lidR:::stopif_wrong_context(context, "tree_detection", "LayerStacking")
+    lidR:::assert_is_valid_context("tree_detection", "LayerStacking")
 
     Z <- NULL
 
