@@ -10,7 +10,7 @@ License: GPL-3
 Depends:
     R (>= 3.1.0),methods,lidR (>= 2.0.0),sp,raster
 Imports:
-    assertive,data.table,Rcpp,rgl
+    assertive,data.table,Rcpp,rgeos,stats,fpc
 LinkingTo: BH,Rcpp,RcppArmadillo
 ByteCompile: true
 Encoding: UTF-8

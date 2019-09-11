@@ -2,15 +2,15 @@
 
 #' Individual Tree Segmentation Algorithm
 #'
-#' This functions is made to be used in \link[lidR:lastrees]{lastrees}. It implements an algorithms for tree
-#' segmentation based on paper written by Hamraz et al. (2012). See references and details.
+#' This functions is made to be used in \link[lidR:lastrees]{lastrees}. It implements an algorithms for
+#' tree segmentation based on paper written by Hamraz et al. (2012). See references and details.
 #'
 #' This function has been written by the \code{lidR} authors from the original article. We made our
 #' best to implement as far as possible exactly what is written in the original paper but we cannot
 #' affirm that it is this exact original algorithm.\cr\cr
 #' Also it is important to notice that we have never been able to segment tree properly with this
 #' method. The important sensitivity to minor deviation as well as the great number of difficultly
-#' parametrizable imputs lead us to a method that we are not able to use ourselves.\cr\cr
+#' parametrizable parameter lead us to a method that we are not able to use ourselves.\cr\cr
 #' Also, minor variations were introduced to fix some issues that were not adressed in the original paper.
 #' Because the methods described in section 2.2 of the original article appear extremely sensitive to
 #' many minor deviations, we introduced an optionnal additionnal step to clean the profiles used to build
@@ -20,8 +20,7 @@
 #' This enable to remove outliers and reduce dummy segmentation but anyway we were not able to segment
 #' the tree properly with this method.\cr\cr
 #' As a conclusion this algorithm might be considered as a free and open source code provided to be
-#' improved by the community. One can check and study the sources to ensure that it correspond to the
-#' original paper and find potential improvement.\cr\cr
+#' improved by the community. One can check and study the sources and find potential improvement.\cr\cr
 #' Also the current implementation is known to be slow.
 #'
 #' @param nps numeric. Nominal point spacing (see reference page 533  section 2)
@@ -54,7 +53,7 @@
 #' forests using small-footprint airborne LiDAR data. International Journal of Applied Earth Observation
 #' and Geoinformation, 52, 532–541. https://doi.org/10.1016/j.cageo.2017.02.017
 #'
-#' @author Jasmin Siefert
+#' @author Jasmin Siefert & Jean-Romain Roussel
 #'
 #' @examples
 #' \dontrun{
@@ -125,7 +124,7 @@ hamraz2016 = function(nps = 0.25, th = 5, MDCW = 1.5, epsilon = 5, CLc = 0.8, Oc
       GMX$i <- i
 
       disc  <- lidR::lasclipCircle(LSP, GMX$X, GMX$Y, R)      # Extract a disc around GMX
-      disc@data[, R := sqrt((X - GMX$X)^2 + (Y - GMX$Y)^2)]       # Compute cylindrical cordinates
+      disc@data$R <- with(disc@data, sqrt((X - GMX$X)^2 + (Y - GMX$Y)^2))       # Compute cylindrical cordinates
 
       # (2-4) Find the convex hull according to Hamraz rules
       l <- C_hamraz_segmentation(disc, nps, gap_sensitivity, MDCW, epsilon, CLc, CLs, Oc, Os, R)
