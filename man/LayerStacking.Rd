@@ -22,10 +22,10 @@ map. Default is 1.5 (page 20)}
 \item{buf_size}{scalar Buffer size placed around each point to build a polygonal buffer around each
 cluster (figure 1c page 20). Default is 0.5 (page 18)}
 
-\item{hmin}{scalar. Point below this threshold cannot initiate a new tree.}
-
-\item{harwood}{logical. In dense conifer stands with little penetration to the center of the tree,
+\item{hardwood}{logical. In dense conifer stands with little penetration to the center of the tree,
 additional weight on the overlap map is given to clusters (page 20). Default is FALSE}
+
+\item{hmin}{scalar. Point below this threshold cannot initiate a new tree.}
 }
 \description{
 This function is made to be used in \link[lidR:tree_detection]{tree_detection}. It implements the

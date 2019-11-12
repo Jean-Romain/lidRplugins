@@ -13,7 +13,7 @@
 #' cluster (figure 1c page 20). Default is 0.5 (page 18)
 #' @param ws2 scalar Windows radius of the second local maxima used to detected tree tops on the overlap
 #' map. Default is 1.5 (page 20)
-#' @param harwood logical. In dense conifer stands with little penetration to the center of the tree,
+#' @param hardwood logical. In dense conifer stands with little penetration to the center of the tree,
 #' additional weight on the overlap map is given to clusters (page 20). Default is FALSE
 #' @param hmin scalar. Point below this threshold cannot initiate a new tree.
 #'
@@ -66,6 +66,8 @@ LayerStacking = function(start = 0.5, res = 1, ws1 = 3, ws2 = 1.5, buf_size = 0.
 
 LayerStacking_LayerCluster = function(layers, ttops)
 {
+  cl <- NULL
+
   for (i in seq_along(layers))
   {
     layer = layers[[i]]
