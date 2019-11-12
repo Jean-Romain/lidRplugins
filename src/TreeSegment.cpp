@@ -255,7 +255,7 @@ std::pair<double, double> TreeSegment::findEllipseParameters(polygon &poly)
     data(1, i) = poly.outer().at(i).get<1>();
   }
 
-  unique(data);
+  //unique(data);
 
   // means of each coordinates --> ellipse center
   for (size_t i = 0 ; i < n ; i++)
