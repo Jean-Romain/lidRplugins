@@ -159,7 +159,8 @@ hamraz2016 = function(nps = 0.25, th = 5, MDCW = 1.5, epsilon = 5, CLc = 0.8, Oc
       else
       {
         # Find the points that belong in the convex hull
-        in_p <- lidR:::C_points_in_polygon(ch$x, ch$y, LSP@data$X, LSP@data$Y)
+        wkt <- sf::st_as_text(sf::st_polygon(list(as.matrix(ch))), digits = 10)
+        in_p <- lidR:::C_in_polygon(LSP, wkt, 1L)
 
         # If no point found within this polygon only GMX will be remove
         if (sum(in_p) == 0)
@@ -185,7 +186,8 @@ hamraz2016 = function(nps = 0.25, th = 5, MDCW = 1.5, epsilon = 5, CLc = 0.8, Oc
       if (area > pi*(MDCW/2)^2)
       {
         idTree   <- idTree + 1L
-        las_in_p <- lidR:::C_points_in_polygon(ch$x, ch$y, las@data$X, las@data$Y)
+        wkt <- sf::st_as_text(sf::st_polygon(list(as.matrix(ch))), digits = 10)
+        las_in_p <- lidR:::C_in_polygon(las, wkt, 1L)
 
         # a new ID is attributed only to points that don't already have an ID (dominant has precedence)
         update <- las_in_p & is.na(treeID)
