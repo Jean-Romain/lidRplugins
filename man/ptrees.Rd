@@ -52,11 +52,14 @@ ttops = tree_detection(las, ptrees(k))
 las   = lastrees(las, ptrees(k))
 }
 \seealso{
-Other individual tree segmentation algorithms: \code{\link{hamraz2016}}
+Other individual tree segmentation algorithms: 
+\code{\link{hamraz2016}()}
 
-Other individual tree detection algorithms: \code{\link{multichm}}
+Other individual tree detection algorithms: 
+\code{\link{multichm}()}
 
-Other point-cloud based tree segmentation algorithms: \code{\link{hamraz2016}}
+Other point-cloud based tree segmentation algorithms: 
+\code{\link{hamraz2016}()}
 }
 \author{
 Jasmin Siefert and Jean-Romain Roussel

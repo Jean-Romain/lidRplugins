@@ -4,8 +4,15 @@
 \alias{LayerStacking}
 \title{Individual Tree Detection Algorithm}
 \usage{
-LayerStacking(start = 0.5, res = 1, ws1 = 3, ws2 = 1.5,
-  buf_size = 0.5, hardwood = FALSE, hmin = 2)
+LayerStacking(
+  start = 0.5,
+  res = 1,
+  ws1 = 3,
+  ws2 = 1.5,
+  buf_size = 0.5,
+  hardwood = FALSE,
+  hmin = 2
+)
 }
 \arguments{
 \item{start}{scalar The point cloud is horizontally layered at 1-m intervals starting at 'start'

@@ -4,8 +4,17 @@
 \alias{lake_segmentation}
 \title{Individual waterbodies segmentation}
 \usage{
-lake_segmentation(las, tol = 1/1000, tol2 = c(1/30 * tol, 2 * tol),
-  trim = 1000, p = 0.5, res = 5, th1 = 25, th2 = 6, k = 10)
+lake_segmentation(
+  las,
+  tol = 1/1000,
+  tol2 = c(1/30 * tol, 2 * tol),
+  trim = 1000,
+  p = 0.5,
+  res = 5,
+  th1 = 25,
+  th2 = 6,
+  k = 10
+)
 }
 \arguments{
 \item{las}{A LAS or LAScatalog object.}

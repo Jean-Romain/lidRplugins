@@ -142,6 +142,7 @@ lake_segmentation.LAS <- function(las, tol = 1/1000, tol2 = c(1/30*tol, 2*tol), 
   # Raster estimation
   lidR:::verbose("Precomputing lakes (raster step)...")
   rlakes <- lake_detection_raster(las, tol2, trim, p, res)
+  raster::projection(rlakes) <- raster::projection(las)
 
   # Special case to return the raster and be able to test the input paramters effects
   if (is.null(tol)) return(rlakes)
@@ -168,7 +169,7 @@ lake_segmentation.LAS <- function(las, tol = 1/1000, tol2 = c(1/30*tol, 2*tol), 
 
   # Simplify the geometry
   vlake <- rgeos::gSimplify(vlake, 1, TRUE)
-
+  vlake@proj4string <- las@proj4string
   return(vlake)
 }
 
@@ -412,7 +413,7 @@ lake_detection_vector <- function(las, rlake = NULL, tol = 1/1000, trim = 1000, 
     # This removes very dummy  bodies
     #verbose("Trimming small bodies...")
     A      <- raster::area(hulls)
-    hulls2 <- hulls[A > 1000,]
+    hulls2 <- hulls[A > trim,]
 
     if (length(hulls2) == 0) {
       lakes[[i]] <- empty

@@ -4,8 +4,14 @@
 \alias{multichm}
 \title{Individual Tree Detection Algorithm}
 \usage{
-multichm(res = 1, layer_thickness = 0.5, dist_2d = 3, dist_3d = 5,
-  use_max = FALSE, ...)
+multichm(
+  res = 1,
+  layer_thickness = 0.5,
+  dist_2d = 3,
+  dist_3d = 5,
+  use_max = FALSE,
+  ...
+)
 }
 \arguments{
 \item{res}{numeric. Resolution of the CHM based on the 95th percentile}
@@ -68,6 +74,7 @@ A benchmark of lidar-based single tree detection methods using heterogeneous for
 Alpine Space. Forests, 6(5), 1721–1747. https://doi.org/10.3390/f6051721
 }
 \seealso{
-Other individual tree detection algorithms: \code{\link{ptrees}}
+Other individual tree detection algorithms: 
+\code{\link{ptrees}()}
 }
 \concept{individual tree detection algorithms}
