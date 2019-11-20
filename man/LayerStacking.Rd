@@ -44,3 +44,10 @@ Ayrey, E., Fraver, S., Kershaw, J. A., Kenefic, L. S., Hayes, D., Weiskittel, A.
 (2017). Layer Stacking: A Novel Algorithm for Individual Forest Tree Segmentation from LiDAR Point
 Clouds. Canadian Journal of Remote Sensing, 43(1), 16–27. https://doi.org/10.1080/07038992.2017.1252907
 }
+\seealso{
+Other individual tree detection algorithms: 
+\code{\link{lmfauto}()},
+\code{\link{multichm}()},
+\code{\link{ptrees}()}
+}
+\concept{individual tree detection algorithms}

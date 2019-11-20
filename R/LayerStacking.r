@@ -17,6 +17,8 @@
 #' additional weight on the overlap map is given to clusters (page 20). Default is FALSE
 #' @param hmin scalar. Point below this threshold cannot initiate a new tree.
 #'
+#' @family individual tree detection algorithms
+#'
 #' @references
 #' Ayrey, E., Fraver, S., Kershaw, J. A., Kenefic, L. S., Hayes, D., Weiskittel, A. R., & Roth, B. E.
 #' (2017). Layer Stacking: A Novel Algorithm for Individual Forest Tree Segmentation from LiDAR Point

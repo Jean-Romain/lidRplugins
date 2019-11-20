@@ -75,6 +75,8 @@ Alpine Space. Forests, 6(5), 1721–1747. https://doi.org/10.3390/f6051721
 }
 \seealso{
 Other individual tree detection algorithms: 
+\code{\link{LayerStacking}()},
+\code{\link{lmfauto}()},
 \code{\link{ptrees}()}
 }
 \concept{individual tree detection algorithms}

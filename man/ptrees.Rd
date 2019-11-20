@@ -56,6 +56,8 @@ Other individual tree segmentation algorithms:
 \code{\link{hamraz2016}()}
 
 Other individual tree detection algorithms: 
+\code{\link{LayerStacking}()},
+\code{\link{lmfauto}()},
 \code{\link{multichm}()}
 
 Other point-cloud based tree segmentation algorithms: 
