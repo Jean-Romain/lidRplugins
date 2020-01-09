@@ -1,3 +1,7 @@
+![license](https://img.shields.io/badge/Licence-GPL--3-blue.svg) 
+[![Travis build status](https://travis-ci.org/Jean-Romain/lidRplugins.svg?branch=master)](https://travis-ci.com/Jean-Romain/lidRplugins)
+[![Codecov test coverage](https://codecov.io/gh/Jean-Romain/lidRplugins/branch/master/graph/badge.svg)](https://codecov.io/gh/Jean-Romain/lidRplugins?branch=master)
+
 This package contains function and algorithms to extend the [lidR](https://github.com/Jean-Romain/lidR) package (versions > 2.0). These functions or algorthms are not yet or will not be included in the `lidR` package either:
 
 - Because they are experiemental and not supported by a peer-reviewed and accessible publications. For example experiemental individual tree detection methods that were not published. The `lidR` package only contains algorithms that are supported by a citation from the litterature. In `lidRplugins` I explore new possibilities and maybe such functions will be moved into `lidR` later on.
