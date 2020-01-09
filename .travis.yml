@@ -23,6 +23,12 @@ addons:
       - libxt-dev
       - libfftw3-dev
 
+env:
+  global:
+    - BIOC_USE_DEVEL="FALSE"
+
+bioc_required: true
+
 r_packages:
   - covr
 
