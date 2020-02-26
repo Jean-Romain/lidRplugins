@@ -91,7 +91,7 @@ hamraz2016 = function(nps = 0.25, th = 5, MDCW = 1.5, epsilon = 5, CLc = 0.8, Oc
   f = function(las)
   {
     context <- tryCatch({get("lidR.context", envir = parent.frame())}, error = function(e) {return(NULL)})
-    lidR:::assert_is_valid_context("lastrees", "hamraz2016")
+    lidR:::assert_is_valid_context("segment_trees", "hamraz2016")
 
     . <- X <- Y <- Z <- NULL
 

@@ -74,7 +74,7 @@ multichm = function(res = 1, layer_thickness = 0.5, dist_2d = 3, dist_3d = 5, us
   f = function(las)
   {
     context <- tryCatch({get("lidR.context", envir = parent.frame())}, error = function(e) {return(NULL)})
-    lidR:::assert_is_valid_context("tree_detection", "multichm")
+    lidR:::assert_is_valid_context("find_trees", "multichm")
 
     . <- X <- Y <- Z <- treeID <- NULL
 

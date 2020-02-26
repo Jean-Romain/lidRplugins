@@ -50,11 +50,11 @@
 #' step.
 #' #' \preformatted{
 #' # Run only the raster-based conservative step (output is a RasterLayer)
-#' r <- lake_segmentation(las, tol = NULL, tol2 = 1/30000)
+#' r <- delineate_lakes(las, tol = NULL, tol2 = 1/30000)
 #' # Run only the raster-based permissive step (output is a RasterLayer)
-#' r <- lake_segmentation(las, tol = NULL, tol2 = 2/1000)
+#' r <- delineate_lakes(las, tol = NULL, tol2 = 2/1000)
 #' # Run both raster-based steps (output is a RasterStack)
-#' r <- lake_segmentation(las, tol = NULL, tol2 = c(1/30000, 2/1000))
+#' r <- delineate_lakes(las, tol = NULL, tol2 = c(1/30000, 2/1000))
 #' }
 #'
 # @template LAScatalog
@@ -105,7 +105,7 @@
 #' LASfile <- system.file("extdata", "Topography.laz", package="lidR")
 #' las <- readLAS(LASfile, filter = "-thin_with_grid 1")
 #'
-#' lake <- lake_segmentation(las, trim = 700)
+#' lake <- delineate_lakes(las, trim = 700)
 #' plot(las@header)
 #' plot(lake, add = TRUE, col = "cornflowerblue")
 #'
@@ -114,13 +114,13 @@
 #' }
 #' @import methods
 #' @import lidR
-lake_segmentation <- function(las,  tol = 1/1000, tol2 = c(1/30*tol, 2*tol), trim = 1000, p = 0.5, res = 5, th1 = 25, th2 = 6, k = 10)
+delineate_lakes <- function(las,  tol = 1/1000, tol2 = c(1/30*tol, 2*tol), trim = 1000, p = 0.5, res = 5, th1 = 25, th2 = 6, k = 10)
 {
-  UseMethod("lake_segmentation", las)
+  UseMethod("delineate_lakes", las)
 }
 
 #' @export
-lake_segmentation.LAS <- function(las, tol = 1/1000, tol2 = c(1/30*tol, 2*tol), trim = 1000, p = 0.5, res = 5, th1 = 25, th2 = 6, k = 10)
+delineate_lakes.LAS <- function(las, tol = 1/1000, tol2 = c(1/30*tol, 2*tol), trim = 1000, p = 0.5, res = 5, th1 = 25, th2 = 6, k = 10)
 {
   # Defensive programming
   if (!is.null(tol)) lidR:::assert_is_a_number(tol)
@@ -174,22 +174,22 @@ lake_segmentation.LAS <- function(las, tol = 1/1000, tol2 = c(1/30*tol, 2*tol), 
 }
 
 #' @export
-lake_segmentation.LAScluster <- function(las, tol = 1/1000, tol2 = c(1/30*tol, 2*tol), trim = 1000, p = 0.5, res = 5, th1 = 25, th2 = 6, k = 10)
+delineate_lakes.LAScluster <- function(las, tol = 1/1000, tol2 = c(1/30*tol, 2*tol), trim = 1000, p = 0.5, res = 5, th1 = 25, th2 = 6, k = 10)
 {
   las <- lidR::readLAS(las)
   if (lidR::is.empty(las)) return(NULL)
-  lake <- lake_segmentation(las, tol, tol2, trim, p, res, th1, th2, k)
+  lake <- delineate_lakes(las, tol, tol2, trim, p, res, th1, th2, k)
   return(lake)
 }
 
 #' @export
-lake_segmentation.LAScatalog <- function(las, tol = 1/1000, tol2 = c(1/30*tol, 2*tol), trim = 1000, p = 0.5, res = 5, th1 = 25, th2 = 6, k = 10)
+delineate_lakes.LAScatalog <- function(las, tol = 1/1000, tol2 = c(1/30*tol, 2*tol), trim = 1000, p = 0.5, res = 5, th1 = 25, th2 = 6, k = 10)
 {
   lidR::opt_select(las) <- "xyz"
   lidR::opt_filter(las) <- "-thin_with_grid 1"
   lidR::opt_chunk_buffer(las) <- ceiling(sqrt(trim))
   options <- list(need_buffer = TRUE)
-  output  <- lidR::catalog_apply(las, lake_segmentation, tol = tol, tol2 = tol2, trim = trim, p = p, res = res, th1 = th1, th2 = th2, k = k, .options = options)
+  output  <- lidR::catalog_apply(las, delineate_lakes, tol = tol, tol2 = tol2, trim = trim, p = p, res = res, th1 = th1, th2 = th2, k = k, .options = options)
 
   lidR:::verbose("Merging the independent outputs...")
   if (lidR::opt_output_files(las) == "") {
