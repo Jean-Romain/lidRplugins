@@ -15,7 +15,7 @@ case but this does not make sense for a plot.}
 maxima. Default is 2.}
 }
 \description{
-This function is made to be used in \link{tree_detection}. It implements a fast and parameter-free
+This function is made to be used in \link{find_trees}. It implements a fast and parameter-free
 algorithm for individual tree detection for broad coverage. It is based on two local maximum filters
 (LMF). The first pass performs a very rough estimation of the number of trees with a fixed window
 size. Based on this rough estimate it automatically computes a variable windows size LMF with workable
@@ -25,7 +25,7 @@ for more details.
 \examples{
 LASfile <- system.file("extdata", "MixedConifer.laz", package="lidR")
 las <- readLAS(LASfile)
-ttops <- tree_detection(las, lmfauto())
+ttops <- find_trees(las, lmfauto())
 
 x = plot(las)
 add_treetops3d(x, ttops)

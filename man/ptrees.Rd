@@ -18,10 +18,10 @@ to strictly respect original paper.}
 cases (see details). Set to \code{+Inf} to strictly respect the original paper (not recommended)}
 }
 \description{
-This function is made to be used in \link[lidR:tree_detection]{tree_detection} or \link[lidR:lastrees]{lastrees}.
+This function is made to be used in \link[lidR:find_trees]{find_trees} or \link[lidR:segment_trees]{segment_trees}.
 It implements the PTrees algorithm for tree detection and tree segmentation based Vega et al. (2014) (see references).
-When used in the function \link[lidR:tree_detection]{tree_detection} it runs only the fisrt part of the method i.e. the
-detection of the trees. When used in  \link[lidR:lastrees]{lastrees} it performs the  whole segmentation (see details).
+When used in the function \link[lidR:find_trees]{find_trees} it runs only the fisrt part of the method i.e. the
+detection of the trees. When used in  \link[lidR:segment_trees]{segment_trees} it performs the  whole segmentation (see details).
 }
 \details{
 This function has been written by the \code{lidR} authors from the original article. We made our
@@ -48,8 +48,8 @@ LASfile <- system.file("extdata", "MixedConifer.laz", package="lidR")
 las = readLAS(LASfile, select = "xyz")
 
 k = c(30,15)
-ttops = tree_detection(las, ptrees(k))
-las   = lastrees(las, ptrees(k))
+ttops = find_trees(las, ptrees(k))
+las   = segment_trees(las, ptrees(k))
 }
 \seealso{
 Other individual tree segmentation algorithms: 

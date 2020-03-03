@@ -50,7 +50,7 @@ computation speed. The lower the value, the faster the method.}
 (see details)}
 }
 \description{
-This functions is made to be used in \link[lidR:lastrees]{lastrees}. It implements an algorithms for
+This functions is made to be used in \link[lidR:segment_trees]{segment_trees}. It implements an algorithms for
 tree segmentation based on paper written by Hamraz et al. (2012). See references and details.
 }
 \details{
@@ -78,7 +78,7 @@ LASfile <- system.file("extdata", "MixedConifer.laz", package="lidR")
 las <- readLAS(LASfile, select = "xyz", filter = "-drop_z_below 0")
 col <-  pastel.colors(200)
 
-las <- lastrees(las, hamraz2016())
+las <- segment_trees(las, hamraz2016())
 plot(las, color = "treeID", colorPalette = pastel.colors(200))
 }
 }

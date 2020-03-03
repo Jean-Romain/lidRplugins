@@ -2,7 +2,7 @@
 
 #' Individual Tree Segmentation Algorithm
 #'
-#' This functions is made to be used in \link[lidR:lastrees]{lastrees}. It implements an algorithms for
+#' This functions is made to be used in \link[lidR:segment_trees]{segment_trees}. It implements an algorithms for
 #' tree segmentation based on paper written by Hamraz et al. (2012). See references and details.
 #'
 #' This function has been written by the \code{lidR} authors from the original article. We made our
@@ -61,7 +61,7 @@
 #' las <- readLAS(LASfile, select = "xyz", filter = "-drop_z_below 0")
 #' col <-  pastel.colors(200)
 #'
-#' las <- lastrees(las, hamraz2016())
+#' las <- segment_trees(las, hamraz2016())
 #' plot(las, color = "treeID", colorPalette = pastel.colors(200))
 #'}
 hamraz2016 = function(nps = 0.25, th = 5, MDCW = 1.5, epsilon = 5, CLc = 0.8, Oc = 2/3, CLs = 0.7, Os = 1/3, gap_sensitivity = 6L, R = 15.24, filter_profiles = TRUE)

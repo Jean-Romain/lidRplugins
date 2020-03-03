@@ -33,7 +33,7 @@ not implies any sorting algorithm. The algoithm is therefore 5 to 10 times faste
 to find the local maxima.}
 }
 \description{
-This function is made to be used in \link[lidR:tree_detection]{tree_detection}. It implements an algorithms for tree
+This function is made to be used in \link[lidR:find_trees]{find_trees}. It implements an algorithms for tree
 detection based on a method described in Eysn et al (2015) (see references) and propably proposed
 originaly by someone else (we did not find original publication). This is a local maximum filter
 applied on a multi-canopy height model (see details).\cr\cr
@@ -63,7 +63,7 @@ detected tree if there is no detected tree within a given 2D distance as well as
 LASfile <- system.file("extdata", "MixedConifer.laz", package="lidR")
 las = readLAS(LASfile)
 
-ttops = tree_detection(las, multichm(res = 1, ws = 5))
+ttops = find_trees(las, multichm(res = 1, ws = 5))
 
 x = plot(las)
 add_treetops3d(x, ttops)

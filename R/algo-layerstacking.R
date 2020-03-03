@@ -1,6 +1,6 @@
 #' Individual Tree Detection Algorithm
 #'
-#' This function is made to be used in \link[lidR:tree_detection]{tree_detection}. It implements the
+#' This function is made to be used in \link[lidR:find_trees]{find_trees}. It implements the
 #' LayerStacking algorithm for tree detection based on Ayrey et al (2017) (see references).
 #' This function implements only the fisrt part of the method i.e. the detection of the trees.
 #'
@@ -47,7 +47,7 @@ LayerStacking = function(start = 0.5, res = 1, ws1 = 3, ws2 = 1.5, buf_size = 0.
     schm   <- raster::focal(chm, w = kernel, fun = function(x){ mean(x, na.rm = TRUE) })
 
     # Page 19: Local Maximum tree detection
-    ttops   <- lidR::tree_detection(schm, lidR::lmf(ws1*2))
+    ttops   <- lidR::find_trees(schm, lidR::lmf(ws1*2))
 
     layers_cl    <- LayerStacking_LayerCluster(layers, ttops)         # Page 19: kmeans clustering with ttops used as seed points
     layers_bu    <- LayerStacking_LayerBuffer(layers_cl, buf_size)    # Page 20: Polygonal buffer
@@ -55,7 +55,7 @@ LayerStacking = function(start = 0.5, res = 1, ws1 = 3, ws2 = 1.5, buf_size = 0.
 
     # Page 20: Local Maximum tree detection
     soverlap_map <- raster::focal(overlap_map, w = kernel, fun = function(x){ mean(x, na.rm = TRUE) })
-    ttops        <- lidR::tree_detection(soverlap_map, lidR::lmf(ws2*2, hmin = 0))
+    ttops        <- lidR::find_trees(soverlap_map, lidR::lmf(ws2*2, hmin = 0))
     ttops$Z      <- chm[ttops]
     ttops        <- ttops[!is.na(ttops$Z),]
     ttops        <- ttops[ttops$Z >= hmin,]

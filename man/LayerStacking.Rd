@@ -35,7 +35,7 @@ additional weight on the overlap map is given to clusters (page 20). Default is 
 \item{hmin}{scalar. Point below this threshold cannot initiate a new tree.}
 }
 \description{
-This function is made to be used in \link[lidR:tree_detection]{tree_detection}. It implements the
+This function is made to be used in \link[lidR:find_trees]{find_trees}. It implements the
 LayerStacking algorithm for tree detection based on Ayrey et al (2017) (see references).
 This function implements only the fisrt part of the method i.e. the detection of the trees.
 }

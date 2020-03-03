@@ -1,6 +1,6 @@
 #' Individual Tree Detection Algorithm
 #'
-#' This function is made to be used in \link[lidR:tree_detection]{tree_detection}. It implements an algorithms for tree
+#' This function is made to be used in \link[lidR:find_trees]{find_trees}. It implements an algorithms for tree
 #' detection based on a method described in Eysn et al (2015) (see references) and propably proposed
 #' originaly by someone else (we did not find original publication). This is a local maximum filter
 #' applied on a multi-canopy height model (see details).\cr\cr
@@ -56,7 +56,7 @@
 #' LASfile <- system.file("extdata", "MixedConifer.laz", package="lidR")
 #' las = readLAS(LASfile)
 #'
-#' ttops = tree_detection(las, multichm(res = 1, ws = 5))
+#' ttops = find_trees(las, multichm(res = 1, ws = 5))
 #'
 #' x = plot(las)
 #' add_treetops3d(x, ttops)
@@ -97,7 +97,7 @@ multichm = function(res = 1, layer_thickness = 0.5, dist_2d = 3, dist_3d = 5, us
 
       if (max(chm95[], na.rm = TRUE) > hmin)
       {
-        lm       <- lidR::tree_detection(chm95, lidR::lmf(...))
+        lm       <- lidR::find_trees(chm95, lidR::lmf(...))
         colnames(lm@coords) <- c("X", "Y")
         lm       <- raster::as.data.frame(lm)
         data.table::setDT(lm)

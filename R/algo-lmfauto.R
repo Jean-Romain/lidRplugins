@@ -1,6 +1,6 @@
 #' Individual Tree Detection Algorithm
 #'
-#' This function is made to be used in \link{tree_detection}. It implements a fast and parameter-free
+#' This function is made to be used in \link{find_trees}. It implements a fast and parameter-free
 #' algorithm for individual tree detection for broad coverage. It is based on two local maximum filters
 #' (LMF). The first pass performs a very rough estimation of the number of trees with a fixed window
 #' size. Based on this rough estimate it automatically computes a variable windows size LMF with workable
@@ -22,7 +22,7 @@
 #' @examples
 #' LASfile <- system.file("extdata", "MixedConifer.laz", package="lidR")
 #' las <- readLAS(LASfile)
-#' ttops <- tree_detection(las, lmfauto())
+#' ttops <- find_trees(las, lmfauto())
 #'
 #' x = plot(las)
 #' add_treetops3d(x, ttops)
@@ -34,7 +34,7 @@ lmfauto = function(plot = FALSE, hmin = 2)
     lidR:::assert_is_valid_context(lidR:::LIDRCONTEXTITD, "lmfauto")
 
     # Step 1: detection with a fixed 5 m windows size
-    ttop5 <- lidR::tree_detection(las, lidR::lmf(5))
+    ttop5 <- lidR::find_trees(las, lidR::lmf(5))
 
     # Step 2: raw/rough/poor estimate of number of trees per ha in
     # the local neighourhood
