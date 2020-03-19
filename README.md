@@ -8,7 +8,7 @@ This package contains function and algorithms to extend the [lidR](https://githu
 - Because they were judged **non suitable for `lidR`**. For example an algorithms for tree segmentation from a peer-reviewed publication that was found blazingly slow even after a C++ optimizations. For the sake of reproducibility these algorithms are provided as open source tools in `lidRplugins` but are not included in `lidR` because I believe they are not suitable for real applications.
 - Because they were **not tested enought** and I'm not sure they are actually useful for the community.  Maybe such functions will be moved into `lidR` later on.
 
-This package will NOT be submitted on CRAN and must be installed from github. It depends on `lidR (>= 3.0.0)`. Users **should not** base their important workflow on this package. It should be seen as a laboratory with more or less interesting content inside and this content can change without warning. 
+This package will NOT be submitted on CRAN and must be installed from github. It depends on `lidR (>= 3.0.0)`. Users **should not** base their important workflow on this package. It should be seen as a laboratory with more or less interesting content inside and this content can change without warning.   
 
 ```r
 devtools::install_github("Jean-Romain/lidRplugins")
