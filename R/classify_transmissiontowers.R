@@ -49,8 +49,6 @@ classify_transmissiontowers.LAS = function(las, towers, dtm, threshold = 2)
 
 tower.boundingbox = function(towers)
 {
-  dtm <- NULL
-
   if (length(towers) == 0L)
   {
     data = data.frame(maxZ = numeric(0), minZ = numeric(0), deflection = integer(0))
@@ -90,7 +88,7 @@ tower.boundingbox = function(towers)
   # Compute an extent for the tower by buffering the lines
   towers.extent <- rgeos::gBuffer(tower.orientation, width = tower.spec$width[2]/2, capStyle = "SQUARE", byid = T)
   towers.extent$maxZ <- towers$Z
-  towers.extent$minZ <- sapply(raster::extract(dtm, towers.extent), mean)
+  towers.extent$minZ <- towers$dtm
 
   return(towers.extent)
 }
