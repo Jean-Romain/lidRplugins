@@ -10,7 +10,9 @@ License: GPL-3
 Depends:
     R (>= 3.1.0),methods,lidR (>= 3.0.0)
 Imports:
-    assertive,data.table,Rcpp,rgeos,stats,fpc,velox,lwgeom,EBImage,glue,sf,raster,sp,rgl
+    assertive,data.table,Rcpp,rgeos,stats,fpc,lwgeom,EBImage,glue,sf,raster,sp,rgl
+Suggest: 
+    velox
 Remotes:
     git::https://github.com/Jean-Romain/RcppConcaveman.git
 LinkingTo: BH,Rcpp,RcppArmadillo
