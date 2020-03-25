@@ -34,7 +34,7 @@ lmfx = function(ws, hmin = 2, dist_2d = 3)
   f = function(las)
   {
     context <- tryCatch({get("lidR.context", envir = parent.frame())}, error = function(e) {return(NULL)})
-    lidR:::assert_is_valid_context(context, "lastrees")
+    lidR:::assert_is_valid_context(context, "lastrees", name = "lmfx")
 
     . <- X <- Y <- Z <- treeID <- NULL
 

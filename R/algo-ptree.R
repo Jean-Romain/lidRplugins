@@ -60,7 +60,7 @@ ptrees = function(k, hmin = 2, nmax = 7L)
   f = function(las)
   {
     context <- tryCatch({get("lidR.context", envir = parent.frame())}, error = function(e) {return(NULL)})
-    lidR:::assert_is_valid_context(c("find_trees", "segment_trees"), "ptrees")
+    lidR:::assert_is_valid_context(c("find_trees", "segment_trees", "lastrees"), "ptrees")
 
     . <- X <- Y <- Z <- treeID <- NULL
 
