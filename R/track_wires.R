@@ -83,7 +83,7 @@ track_wires <- function(towers, powerline, dtm, type = c("waist-type", "double-c
 
   if (debug)
   {
-    plot(raster::extent(dtm), main = paste0("Raw powerline network"))
+    plot(raster::extent(dtm), main = paste0("Raw powerline network"), asp = 1)
     plot(pwll, add = T, col = 1:length(pwll))
   }
 
@@ -156,7 +156,7 @@ track_wires <- function(towers, powerline, dtm, type = c("waist-type", "double-c
 
     lwires <- sp::SpatialLines(wire, proj4string = proj)
     crlwires <- raster::crop(lwires, extent(dtm) - 1)
-    pwires <- rgeos::gBuffer(lwires, width = 0.5*tower.spec$length[2], capStyle = "SQUARE")
+    pwires <- rgeos::gBuffer(lwires, width = 0.3*tower.spec$length[2], capStyle = "SQUARE")
     pwires <- raster::crop(pwires, pwlp)
     pwires <- sp::disaggregate(pwires)
 
@@ -274,12 +274,13 @@ track_wires <- function(towers, powerline, dtm, type = c("waist-type", "double-c
 
   if (debug)
   {
-    col <- c("red", "blue", "forestgreen", "darkorchid", "darkorange")[wires$ID]
+    col <- c("red", "blue", "forestgreen", "darkorchid", "darkorange", "yellow")[wires$ID]
     col[wires$virtual & col == "red"] <- "pink"
     col[wires$virtual & col == "blue"] <- "lightblue"
     col[wires$virtual & col == "forestgreen"] <- "lightgreen"
     col[wires$virtual & col == "darkorchid"] <- "plum"
     col[wires$virtual & col == "darkorange"] <- "goldenrod1"
+    col[wires$virtual & col == "yellow"] <- "white"
 
     plot(raster::extent(dtm), main = paste0("Final extraction"))
     plot(towers, add = T, col = towers$deflection + 1)

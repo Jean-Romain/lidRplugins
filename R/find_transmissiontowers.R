@@ -105,7 +105,7 @@ find_transmissiontowers.LAS = function(las, powerline, dtm, type = c("waist-type
 
   if (debug)
   {
-    plot(las@header, main = paste0("Tower candidates and corrected candidates"))
+    plot(olas@header, main = paste0("Tower candidates and corrected candidates"))
   }
 
   # Loop on each segment
@@ -136,7 +136,7 @@ find_transmissiontowers.LAS = function(las, powerline, dtm, type = c("waist-type
     if (debug)
     {
       plot(towers, add = T, col = "gray40")
-      #text(towers@coords[,1], towers@coords[,2]+40, 1:length(towers), cex = 0.8, col = k)
+      text(towers@coords[,1], towers@coords[,2]+40, 1:length(towers), cex = 0.8, col = k)
       #plot(las) %>% add_treetops3d(towers, radius = 5)
     }
 
@@ -380,7 +380,7 @@ tower.correction <-  function(las, angle, tower.spec, Zbottom)
   # A tower is a continuous structure horizontally
   a <- angle + pi/2
   rot <- matrix(c(cos(a), sin(a), -sin(a), cos(a)), ncol = 2)
-  coords <- as.matrix(lidR:::coordinates(lasfilter(las, Z > dtm + 5)))
+  coords <- as.matrix(lidR:::coordinates(lasfilter(las, Z > Zm - tower.spec$wire.distance.to.top - 2)))
   zero <- sp::bbox(las)[,1]
   coords[,1] <- coords[,1] - zero[1]
   coords[,2] <- coords[,2] - zero[2]
@@ -436,7 +436,7 @@ get_tower_spec = function(type)
     name = "waist-type",
     length = c(38,40),
     width = c(15, 20),
-    height = c(32,62),
+    height = c(32,64),
     wires = 3L,
     wire.layers = 1L,
     wire.distance = 0,
@@ -447,7 +447,7 @@ get_tower_spec = function(type)
     name = "double-circuit",
     length = c(15,20),
     width = c(10, 13),
-    height = c(40,60),
+    height = c(40,62),
     wires = 2L,
     wire.layers = 3L,
     wire.distance = 7 ,
