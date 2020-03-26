@@ -1,7 +1,7 @@
 #' Individual Tree Detection Algorithm
 #'
 #' Copied from: https://raw.githubusercontent.com/Jean-Romain/lidRplugins/c42cf582ca28b315bf4166f88d727cd80866fafa/R/algo_tree_detection.r
-#' This function is made to be used in \link[lidR:tree_detection]{tree_detection}. It implements an
+#' This function is made to be used in \link[lidR:find_trees]{find_trees}. It implements an
 #' experimental algorithms for tree detection based on a several ideas from the litterature. First it
 #' select the highest points in each cell of a 1 m grid to reduce the amount of data and considerably
 #' improve speed, then it performs a local maximum filter to find tree tops. To finish it applies the
