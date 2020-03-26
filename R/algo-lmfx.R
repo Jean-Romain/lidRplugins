@@ -58,8 +58,8 @@ lmfx = function(ws, hmin = 2, dist_2d = 3)
       stop("'ws' must be a number or a function", call. = FALSE)
 
     . <- X <- Y <- Z <- treeID <- NULL
-    las = lidR::lasfilterdecimate(las, lidR::highest(1))
-    is_maxima = lidR:::C_lmf(las@data, ws, hmin, TRUE, lidR:::getThread())
+    las = lidR::decimate_points(las, lidR::highest(1))
+    is_maxima = lidR:::C_lmf(las, ws, hmin, TRUE, lidR:::getThread())
     LM = las@data[is_maxima, .(X,Y,Z)]
 
     data.table::setorder(LM, -Z)
