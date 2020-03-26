@@ -59,7 +59,7 @@ lmfx = function(ws, hmin = 2, dist_2d = 3)
 
     . <- X <- Y <- Z <- treeID <- NULL
     las = lidR::lasfilterdecimate(las, lidR::highest(1))
-    is_maxima = lidR:::C_lmf(las@data, ws, hmin, TRUE)
+    is_maxima = lidR:::C_lmf(las@data, ws, hmin, TRUE, getThread())
     LM = las@data[is_maxima, .(X,Y,Z)]
 
     data.table::setorder(LM, -Z)
