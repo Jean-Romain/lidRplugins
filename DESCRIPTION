@@ -8,7 +8,7 @@ Authors@R: c(
 Description: Extra experimental functions and algorithms for lidR package that are not yet or that will not be included in the lidR package for various reasons.
 License: GPL-3
 Depends:
-    R (>= 3.1.0),methods
+    R (>= 3.1.0),methods,lidR (>= 3.0.0)
 Imports:
     assertive,data.table,Rcpp,rgeos,stats,fpc,lwgeom,EBImage,glue,sf,raster,sp,rgl
 Suggest: 
