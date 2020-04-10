@@ -89,7 +89,7 @@ track_wires <- function(towers, powerline, dtm, type = c("waist-type", "double-c
 
   # This starts like the tower detection by fixing the shapefile
   pwll <- gJoinLines(pwll, 2)
-  pwll <- rgeos::gSimplify(pwll, 6)
+  pwll <- rgeos::gSimplify(pwll, 40)
   spwll <- gSplitLines(pwll)
   spwlp <- rgeos::gBuffer(spwll, width = 125, byid = T, capStyle = 'SQUARE')
 
@@ -288,6 +288,10 @@ track_wires <- function(towers, powerline, dtm, type = c("waist-type", "double-c
     plot(wires, col = col, add = T, cex = 0.1)
   }
 
+  # clean wires below ground
+  z0 <- dtm[wires]
+  invalid <- unique(wires$section[which(wires$z - z0 < 0)])
+  wires <- wires[!wires$section %in% invalid,]
   return(wires)
 }
 

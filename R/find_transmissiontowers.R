@@ -83,7 +83,7 @@ find_transmissiontowers.LAS = function(las, powerline, dtm, type = c("waist-type
   }
 
   pwll <- gJoinLines(pwll, 2)
-  pwll <- rgeos::gSimplify(pwll, 6)
+  pwll <- rgeos::gSimplify(pwll, 40)
 
   # Split each segment/section of the powerline
   # This allow to support powerline deflection
