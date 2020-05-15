@@ -67,7 +67,7 @@ lmfauto = function(plot = FALSE, hmin = 2)
     return(lm)
   }
 
-  class(f) <- c("PointCloudBased", "IndividualTreeDetection", "Algorithm", "lidR")
+  class(f) <- c(lidR:::LIDRALGORITHMITD, lidR:::LIDRALGORITHMOPENMP, lidR:::LIDRALGORITHMPOINTCLOUDBASED)
   return(f)
 }
 

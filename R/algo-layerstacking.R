@@ -29,7 +29,7 @@ LayerStacking = function(start = 0.5, res = 1, ws1 = 3, ws2 = 1.5, buf_size = 0.
   f = function(las)
   {
     context <- tryCatch({get("lidR.context", envir = parent.frame())}, error = function(e) {return(NULL)})
-    lidR:::assert_is_valid_context("find_trees", "LayerStacking")
+    lidR:::assert_is_valid_context(lidR:::LIDRCONTEXTITD, "LayerStacking")
 
     Z <- NULL
 
@@ -62,7 +62,7 @@ LayerStacking = function(start = 0.5, res = 1, ws1 = 3, ws2 = 1.5, buf_size = 0.
     return(ttops)
   }
 
-  class(f) <- c("PointCloudBased", "IndividualTreeDetection", "Algorithm", "lidR")
+  class(f) <- c(lidR:::LIDRALGORITHMITD, lidR:::LIDRALGORITHMPOINTCLOUDBASED)
   return(f)
 }
 
