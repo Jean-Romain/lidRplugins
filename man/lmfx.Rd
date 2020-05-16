@@ -30,7 +30,7 @@ filtering rule from \link{multichm} (step (b))
 LASfile <- system.file("extdata", "MixedConifer.laz", package="lidR")
 las = readLAS(LASfile)
 
-ttops = tree_detection(las, lmfx(ws = 3))
+ttops = find_trees(las, lmfx(ws = 3))
 
 x = plot(las)
 add_treetops3d(x, ttops)
