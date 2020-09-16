@@ -85,4 +85,5 @@ ptrees = function(k, hmin = 2, nmax = 7L)
   }
 
   class(f) <- unique(c(lidR:::LIDRALGORITHMITD, lidR:::LIDRALGORITHMITS, lidR:::LIDRALGORITHMPOINTCLOUDBASED))
+  return(f)
 }
