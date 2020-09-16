@@ -62,14 +62,14 @@
 #' add_treetops3d(x, ttops)
 multichm = function(res = 1, layer_thickness = 0.5, dist_2d = 3, dist_3d = 5, use_max = FALSE, ...)
 {
-  assertive::assert_is_a_number(res)
-  assertive::assert_is_a_number(layer_thickness)
-  assertive::assert_is_a_number(dist_2d)
-  assertive::assert_is_a_number(dist_3d)
-  assertive::assert_all_are_positive(res)
-  assertive::assert_all_are_positive(layer_thickness)
-  assertive::assert_all_are_positive(dist_2d)
-  assertive::assert_all_are_positive(dist_3d)
+  lidR:::assert_is_a_number(res)
+  lidR:::assert_is_a_number(layer_thickness)
+  lidR:::assert_is_a_number(dist_2d)
+  lidR:::assert_is_a_number(dist_3d)
+  lidR:::assert_all_are_positive(res)
+  lidR:::assert_all_are_positive(layer_thickness)
+  lidR:::assert_all_are_positive(dist_2d)
+  lidR:::assert_all_are_positive(dist_3d)
 
   f = function(las)
   {

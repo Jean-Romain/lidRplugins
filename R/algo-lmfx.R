@@ -39,11 +39,11 @@ lmfx = function(ws, hmin = 2, dist_2d = 3)
 
     dist_2d = dist_2d^2
 
-    if (assertive::is_a_number(ws))
+    if (is.numeric(ws) & length(ws) == 1)
     {
       # nothing to do
     }
-    else if (assertive::is_function(ws))
+    else if (is.function(ws))
     {
       n  = nrow(las@data)
       ws = ws(las@data$Z)

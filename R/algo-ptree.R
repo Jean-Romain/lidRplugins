@@ -51,11 +51,9 @@
 #' las   = segment_trees(las, ptrees(k))
 ptrees = function(k, hmin = 2, nmax = 7L)
 {
-  assertive::assert_is_numeric(k)
-  assertive::assert_all_are_positive(k)
-  assertive::assert_all_are_whole_numbers(k)
-  assertive::assert_is_a_number(nmax)
-  assertive::assert_all_are_whole_numbers(nmax)
+  lidR:::assert_is_numeric(k)
+  lidR:::assert_all_are_positive(k)
+  lidR:::assert_is_a_number(nmax)
 
   f = function(las)
   {
