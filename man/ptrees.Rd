@@ -51,6 +51,12 @@ k = c(30,15)
 ttops = find_trees(las, ptrees(k))
 las   = segment_trees(las, ptrees(k))
 }
+\references{
+Vega, C., Hamrouni, a., El Mokhtari, S., Morel, J., Bock, J., Renaud, J.-P., …
+Durrieu, S. (2014). PTrees: A point-based approach to forest tree extraction
+from lidar data. International Journal of Applied Earth Observation and
+Geoinformation, 33, 98–108. https://doi.org/10.1016/j.jag.2014.05.001
+}
 \seealso{
 Other individual tree segmentation algorithms: 
 \code{\link{hamraz2016}()}

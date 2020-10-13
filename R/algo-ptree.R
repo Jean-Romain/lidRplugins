@@ -34,8 +34,12 @@
 #' @param nmax integer. This is an addition from the original paper to protect against uncomputable
 #' cases (see details). Set to \code{+Inf} to strictly respect the original paper (not recommended)
 #'
-#'@author Jasmin Siefert and Jean-Romain Roussel
-#'
+#' @author Jasmin Siefert and Jean-Romain Roussel
+#' @references
+#' Vega, C., Hamrouni, a., El Mokhtari, S., Morel, J., Bock, J., Renaud, J.-P., …
+#' Durrieu, S. (2014). PTrees: A point-based approach to forest tree extraction
+#' from lidar data. International Journal of Applied Earth Observation and
+#' Geoinformation, 33, 98–108. https://doi.org/10.1016/j.jag.2014.05.001
 #' @export
 #'
 #' @family individual tree segmentation algorithms
