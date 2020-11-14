@@ -721,7 +721,7 @@ tHulls = function(D, X, s = 5)
       if (!suppressWarnings(rgeos::gIsValid(sp)))
       {
         spsf = sf::st_as_sf(sp)
-        spsf = lwgeom::st_make_valid(spsf)
+        spsf = sf::st_make_valid(spsf)
         sp = as(spsf, "Spatial")
         sp = as(sp, "SpatialPolygons")
         p = sp@polygons[[1]]
