@@ -1,7 +1,7 @@
 #include "TreeSegmentManager.h"
 #include "TreeSegment.h"
 #include "Progress.h"
-#include <SpatialIndexes.h>
+#include <SpatialIndex.h>
 
 typedef std::vector<lidR::PointXYZ> vpoint;
 typedef std::vector<ptrees::TreeSegment> vtreesegment;

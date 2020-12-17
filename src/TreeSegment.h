@@ -4,7 +4,7 @@
 #include <boost/geometry.hpp>
 #include <cmath>
 #include <RcppArmadillo.h>
-#include <SpatialIndexes.h>
+#include <SpatialIndex.h>
 
 typedef boost::geometry::model::point<double, 2, boost::geometry::cs::cartesian> point_t;
 typedef boost::geometry::model::polygon<point_t> polygon;

@@ -1,5 +1,5 @@
 #include <Rcpp.h>
-#include <SpatialIndexes.h>
+#include <SpatialIndex.h>
 using namespace Rcpp;
 
 // [[Rcpp::export(rng = false)]]
