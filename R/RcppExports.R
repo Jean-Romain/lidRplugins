@@ -9,3 +9,7 @@ C_lastrees_ptrees <- function(las, k_values, hmin, nmax, segmentation = TRUE) {
     .Call('_lidRplugins_C_lastrees_ptrees', PACKAGE = 'lidRplugins', las, k_values, hmin, nmax, segmentation)
 }
 
+C_count_in_disc <- function(X, Y, x, y, radius, ncpu) {
+    .Call('_lidRplugins_C_count_in_disc', PACKAGE = 'lidRplugins', X, Y, x, y, radius, ncpu)
+}
+

@@ -41,10 +41,26 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// C_count_in_disc
+IntegerVector C_count_in_disc(NumericVector X, NumericVector Y, NumericVector x, NumericVector y, double radius, int ncpu);
+RcppExport SEXP _lidRplugins_C_count_in_disc(SEXP XSEXP, SEXP YSEXP, SEXP xSEXP, SEXP ySEXP, SEXP radiusSEXP, SEXP ncpuSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type X(XSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type Y(YSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type y(ySEXP);
+    Rcpp::traits::input_parameter< double >::type radius(radiusSEXP);
+    Rcpp::traits::input_parameter< int >::type ncpu(ncpuSEXP);
+    rcpp_result_gen = Rcpp::wrap(C_count_in_disc(X, Y, x, y, radius, ncpu));
+    return rcpp_result_gen;
+END_RCPP
+}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_lidRplugins_C_hamraz_segmentation", (DL_FUNC) &_lidRplugins_C_hamraz_segmentation, 10},
     {"_lidRplugins_C_lastrees_ptrees", (DL_FUNC) &_lidRplugins_C_lastrees_ptrees, 5},
+    {"_lidRplugins_C_count_in_disc", (DL_FUNC) &_lidRplugins_C_count_in_disc, 6},
     {NULL, NULL, 0}
 };
 

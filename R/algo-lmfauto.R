@@ -54,7 +54,7 @@ lmfauto = function(plot = FALSE, hmin = 2)
       Aha   <- 10000/A
       x     <- ttop5@coords[,1]
       y     <- ttop5@coords[,2]
-      ntop5 <- lidR:::C_count_in_disc(x, y, las@data$X, las@data$Y, sqrt(A/pi), lidR:::getThread())
+      ntop5 <- C_count_in_disc(x, y, las@data$X, las@data$Y, sqrt(A/pi), lidR:::getThread())
       ntop5 <- ntop5*Aha
     }
 
