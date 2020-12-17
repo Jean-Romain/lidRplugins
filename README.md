@@ -17,24 +17,27 @@ This package will NOT be submitted on CRAN and must be installed from github. It
 
 Lake delineation from point cloud using `delineate_lakes()`
 
-<img src="./.img/lakes.png" width="800px"/>
-
- 
-```r
-remotes::install_github("Jean-Romain/lidRplugins")
-```
+<img src="./.img/lakes.png" width="700px"/>
 
 ### Powerline segmentation :microscope: :warning:
 
 Powerline segmentation from point cloud using `find_transmissiontowers()`, `classify_transmissiontowers()`, `classify_wires()`, `track_wires()`
 
-<img src="./.img/powerlines.png" width="650px"/>
+<img src="./.img/powerlines.png" width="500px"/>
 
- 
+### LiDAR tiles boundaries :octocat:
+
+### Various peer-reviewed tree detection/segmentation :zap:
+
+### Parameter free tree detection :microscope:
+
+### Additionnal ground classification algorithms :octocat:
+
+## Installation
+
 ```r
 remotes::install_github("Jean-Romain/lidRplugins")
 ```
-
 
 To install the package from github make sure you have a working development environment.
 
