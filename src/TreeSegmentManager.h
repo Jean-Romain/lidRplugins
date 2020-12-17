@@ -12,29 +12,29 @@ namespace ptrees
       ~TreeSegmentManager();
 
       size_t size();
-      std::vector<PointXYZ>get_apices();
+      std::vector<lidR::PointXYZ>get_apices();
 
-      bool is_labeled(const PointXYZ&);
+      bool is_labeled(const lidR::PointXYZ&);
       void add_treesegment(TreeSegment &t);
-      void add_point_at(unsigned int p, PointXYZ &u);
+      void add_point_at(unsigned int p, lidR::PointXYZ &u);
       void calculateTreeScores();
       void remove_tree_with_less_than_3_points();
 
-      int search_best_match_tree_id(std::vector<int> &knnTreeID, PointXYZ &pointToSort);
-      std::vector<int> search_neighbours_labels(std::vector<PointXYZ>&);
+      int search_best_match_tree_id(std::vector<int> &knnTreeID, lidR::PointXYZ &pointToSort);
+      std::vector<int> search_neighbours_labels(std::vector<lidR::PointXYZ>&);
       std::vector<TreeSegment> search_trees_in(const TreeSegment&);
 
       static std::vector<std::vector<int> > createCombination(int);
       static TreeSegment build_combination(std::vector<TreeSegment> &, std::vector<int> &);
       static std::vector<TreeSegment> get_non_combined_tree(std::vector<TreeSegment> &, std::vector<int> &);
       static double average_score(std::vector<TreeSegment>&);
-      static void planimetric_filter(std::vector<PointXYZ> &, std::vector<PointXYZ> &);
+      static void planimetric_filter(std::vector<lidR::PointXYZ> &, std::vector<lidR::PointXYZ> &);
 
       Rcpp::List to_R();
 
     private:
-      int searchID_usingArea(std::vector<int> &knnTreeID, PointXYZ &pointToSort);
-      int searchID_usingDist(std::vector<int> &knnTreeID, PointXYZ &pointToSort);
+      int searchID_usingArea(std::vector<int> &knnTreeID, lidR::PointXYZ &pointToSort);
+      int searchID_usingDist(std::vector<int> &knnTreeID, lidR::PointXYZ &pointToSort);
 
     public:
       std::vector<TreeSegment>treeStorage;

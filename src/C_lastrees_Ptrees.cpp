@@ -1,14 +1,13 @@
 #include "TreeSegmentManager.h"
 #include "TreeSegment.h"
-#include "Point.h"
-#include "QuadTree.h"
 #include "Progress.h"
+#include <SpatialIndexes.h>
 
-typedef std::vector<PointXYZ> vpoint;
+typedef std::vector<lidR::PointXYZ> vpoint;
 typedef std::vector<ptrees::TreeSegment> vtreesegment;
 
-ptrees::TreeSegmentManager PTrees_detection(vpoint&, int, double, QuadTree&, Progress&);
-ptrees::TreeSegmentManager PTrees_segmentation(vpoint&, vpoint&, std::vector<int>&, double, QuadTree&, Progress&);
+ptrees::TreeSegmentManager PTrees_detection(vpoint&, int, double, lidR::QuadTree&, Progress&);
+ptrees::TreeSegmentManager PTrees_segmentation(vpoint&, vpoint&, std::vector<int>&, double, lidR::QuadTree&, Progress&);
 
 // [[Rcpp::export]]
 Rcpp::List C_lastrees_ptrees(Rcpp::S4 las, std::vector<int> k_values, double hmin, int nmax, bool segmentation = true)
@@ -26,13 +25,13 @@ Rcpp::List C_lastrees_ptrees(Rcpp::S4 las, std::vector<int> k_values, double hmi
 
   vpoint points(n);
   for (size_t i = 0 ; i < n ; i++)
-    points[i] = PointXYZ(X[i], Y[i], Z[i], i);
+    points[i] = lidR::PointXYZ(X[i], Y[i], Z[i], i);
 
-  std::sort(points.begin(), points.end(), ZSort<PointXYZ>());
+  std::sort(points.begin(), points.end(), lidR::ZSort<lidR::PointXYZ>());
   std::sort(k_values.begin(), k_values.end(), std::greater<int>());
 
   // Creation of a QuadTree
-  QuadTree qtree(X,Y,Z);
+  lidR::QuadTree qtree(X,Y,Z);
 
   // Progress and check abort (user iteraction)
   unsigned int niter = k_values.size()*n;
@@ -183,7 +182,7 @@ Rcpp::List C_lastrees_ptrees(Rcpp::S4 las, std::vector<int> k_values, double hmi
   return(its_reference.to_R());
 }
 
-ptrees::TreeSegmentManager PTrees_detection(vpoint &points, int k, double hmin, QuadTree& qtree, Progress &p)
+ptrees::TreeSegmentManager PTrees_detection(vpoint &points, int k, double hmin, lidR::QuadTree& qtree, Progress &p)
 {
   //   INITIALISATIONS
   // ======================
@@ -191,7 +190,7 @@ ptrees::TreeSegmentManager PTrees_detection(vpoint &points, int k, double hmin, 
   unsigned int n = points.size();
 
   // Point are sorted, points 0 is belongs in the first tree
-  PointXYZ u = points[0];
+  lidR::PointXYZ u = points[0];
   ptrees::TreeSegment treeInit(u, k);
   ptrees::TreeSegmentManager trees(n, hmin);
   trees.add_treesegment(treeInit);
@@ -275,12 +274,12 @@ ptrees::TreeSegmentManager PTrees_detection(vpoint &points, int k, double hmin, 
   return trees;
 }
 
-ptrees::TreeSegmentManager PTrees_segmentation(vpoint &points, vpoint &apices, std::vector<int> &k, double hmin, QuadTree& qtree, Progress &p)
+ptrees::TreeSegmentManager PTrees_segmentation(vpoint &points, vpoint &apices, std::vector<int> &k, double hmin, lidR::QuadTree& qtree, Progress &p)
 {
   //   INITIALISATIONS
   // ======================
 
-  PointXYZ u;
+  lidR::PointXYZ u;
   unsigned int n = points.size();
   ptrees::TreeSegmentManager its(n, hmin);
 

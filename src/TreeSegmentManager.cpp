@@ -1,5 +1,4 @@
 #include "TreeSegmentManager.h"
-// [[Rcpp::depends(RcppArmadillo)]]
 #include <RcppArmadillo.h>
 
 Rcpp::NumericVector findEllipseParameters(boost::geometry::model::ring<point_t> &points);
@@ -20,7 +19,7 @@ size_t TreeSegmentManager::size()
   return treeStorage.size();
 }
 
-bool TreeSegmentManager::is_labeled(const PointXYZ &u)
+bool TreeSegmentManager::is_labeled(const lidR::PointXYZ &u)
 {
   return points_labels[u.id] != 0;
 }
@@ -31,7 +30,7 @@ void TreeSegmentManager::add_treesegment(TreeSegment &t)
   points_labels[t.Zmax.id] = size();
 }
 
-void TreeSegmentManager::add_point_at(unsigned int p, PointXYZ &u)
+void TreeSegmentManager::add_point_at(unsigned int p, lidR::PointXYZ &u)
 {
   if(treeStorage[p].add_point(u, hmin))
     points_labels[u.id] = p+1;
@@ -43,9 +42,9 @@ void TreeSegmentManager::calculateTreeScores()
     treeStorage[i].compute_all_score();
 }
 
-std::vector<PointXYZ> TreeSegmentManager::get_apices()
+std::vector<lidR::PointXYZ> TreeSegmentManager::get_apices()
 {
-  std::vector<PointXYZ> apices;
+  std::vector<lidR::PointXYZ> apices;
   for (size_t i = 0 ; i < this->size() ; i++)
     apices.push_back(treeStorage[i].Zmax);
 
@@ -64,7 +63,7 @@ std::vector<TreeSegment> TreeSegmentManager::search_trees_in(const TreeSegment &
   return output;
 }
 
-int TreeSegmentManager::search_best_match_tree_id(std::vector<int> &knnTreeID, PointXYZ &pointToSort)
+int TreeSegmentManager::search_best_match_tree_id(std::vector<int> &knnTreeID, lidR::PointXYZ &pointToSort)
 {
   // Here we found 2 or more potential trees for the current point. Some of these trees
   // may have less than 3 points. We have to adapt the search method because the rules on the
@@ -90,7 +89,7 @@ int TreeSegmentManager::search_best_match_tree_id(std::vector<int> &knnTreeID, P
 }
 
 
-std::vector<int> TreeSegmentManager::search_neighbours_labels(std::vector<PointXYZ>& filtered_knn_points)
+std::vector<int> TreeSegmentManager::search_neighbours_labels(std::vector<lidR::PointXYZ>& filtered_knn_points)
 {
   std::vector<int> knnTreeID(filtered_knn_points.size());
   for (size_t i = 0 ; i < filtered_knn_points.size() ; i++)
@@ -103,7 +102,7 @@ std::vector<int> TreeSegmentManager::search_neighbours_labels(std::vector<PointX
   return knnTreeID;
 }
 
-int TreeSegmentManager::searchID_usingArea(std::vector<int> &knnTreeID, PointXYZ &pointToSort)
+int TreeSegmentManager::searchID_usingArea(std::vector<int> &knnTreeID, lidR::PointXYZ &pointToSort)
 {
   int resultID = knnTreeID[0];
 
@@ -122,7 +121,7 @@ int TreeSegmentManager::searchID_usingArea(std::vector<int> &knnTreeID, PointXYZ
   return resultID;
 }
 
-int TreeSegmentManager::searchID_usingDist(std::vector<int> &knnTreeID, PointXYZ &pointToSort)
+int TreeSegmentManager::searchID_usingDist(std::vector<int> &knnTreeID, lidR::PointXYZ &pointToSort)
 {
   //Calcul de la premiere distance
   double distValueBis = 0;
@@ -222,7 +221,7 @@ std::vector< std::vector<int> > TreeSegmentManager::createCombination(int N)
   return(out);
 }
 
-void TreeSegmentManager::planimetric_filter(std::vector<PointXYZ> &subProfile, std::vector<PointXYZ> &subProfileSubset )
+void TreeSegmentManager::planimetric_filter(std::vector<lidR::PointXYZ> &subProfile, std::vector<lidR::PointXYZ> &subProfileSubset )
 {
   double meanValueForThreshold = 0;
   std::vector<double> dist;

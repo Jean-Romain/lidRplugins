@@ -21,9 +21,9 @@ TreeSegment::TreeSegment(int k)
   area = 0;
   this->k = k;
 
-  PointXYZ pmax(DBL_MIN,DBL_MIN,DBL_MIN, 0);
+  lidR::PointXYZ pmax(DBL_MIN,DBL_MIN,DBL_MIN, 0);
   Zmax = pmax;
-  PointXYZ pmin(DBL_MAX,DBL_MAX,DBL_MAX, 0);
+  lidR::PointXYZ pmin(DBL_MAX,DBL_MAX,DBL_MAX, 0);
   Zmin = pmin;
 
   scoreS = 0;
@@ -33,7 +33,7 @@ TreeSegment::TreeSegment(int k)
   scoreGlobal = 0;
 }
 
-TreeSegment::TreeSegment(PointXYZ &pt, int k)
+TreeSegment::TreeSegment(lidR::PointXYZ &pt, int k)
 {
   nbPoints = 1;
   area = 0;
@@ -62,7 +62,7 @@ void TreeSegment::compute_area()
   area = boost::geometry::area(convex_hull);
 }
 
-double TreeSegment::compute_area_increment(PointXYZ &pt)
+double TreeSegment::compute_area_increment(lidR::PointXYZ &pt)
 {
   point_t p(pt.x, pt.y);
 
@@ -78,13 +78,13 @@ double TreeSegment::compute_area_increment(PointXYZ &pt)
   return(std::fabs(area_Pt - area));
 }
 
-double TreeSegment::compute_distance_to(PointXYZ &pt)
+double TreeSegment::compute_distance_to(lidR::PointXYZ &pt)
 {
   point_t p(pt.x, pt.y);
   return boost::geometry::distance(p, convex_hull);
 }
 
-bool TreeSegment::add_point(PointXYZ &pt, double hmin)
+bool TreeSegment::add_point(lidR::PointXYZ &pt, double hmin)
 {
   point_t p(pt.x, pt.y);
 
@@ -232,7 +232,7 @@ TreeSegment TreeSegment::merge(TreeSegment &t)
   boost::geometry::append(union_of_convex_hulls, t.convex_hull.outer());
   boost::geometry::convex_hull(union_of_convex_hulls, new_convex_hull);
 
-  PointXYZ new_Zmax = (this->Zmax.z > t.Zmax.z) ? this->Zmax : t.Zmax;
+  lidR::PointXYZ new_Zmax = (this->Zmax.z > t.Zmax.z) ? this->Zmax : t.Zmax;
 
   newTree.convex_hull = new_convex_hull;
   newTree.Zmax = new_Zmax;

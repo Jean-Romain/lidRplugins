@@ -1,13 +1,10 @@
 #ifndef TREESEGMENT_H
 #define TREESEGMENT_H
 
-// [[Rcpp::depends(BH)]]
-// [[Rcpp::depends(RcppArmadillo)]]
-
 #include <boost/geometry.hpp>
 #include <cmath>
-#include "Point.h"
 #include <RcppArmadillo.h>
+#include <SpatialIndexes.h>
 
 typedef boost::geometry::model::point<double, 2, boost::geometry::cs::cartesian> point_t;
 typedef boost::geometry::model::polygon<point_t> polygon;
@@ -19,7 +16,7 @@ namespace ptrees
     public:
       TreeSegment();
       TreeSegment(int);
-      TreeSegment(PointXYZ &, int);
+      TreeSegment(lidR::PointXYZ &, int);
       ~TreeSegment();
 
     public:
@@ -28,12 +25,12 @@ namespace ptrees
       double get_score();
 
     private:
-      bool add_point(PointXYZ &, double);
+      bool add_point(lidR::PointXYZ &, double);
       void compute_area();
       void compute_all_score();
 
-      double compute_area_increment(PointXYZ &);
-      double compute_distance_to(PointXYZ &);
+      double compute_area_increment(lidR::PointXYZ &);
+      double compute_distance_to(lidR::PointXYZ &);
 
       point_t get_apex();
 
@@ -54,8 +51,8 @@ namespace ptrees
       double scoreR;
       double scoreC;
       double scoreGlobal;
-      PointXYZ Zmax;
-      PointXYZ Zmin;
+      lidR::PointXYZ Zmax;
+      lidR::PointXYZ Zmin;
       polygon convex_hull;
 
       friend class TreeSegmentManager;

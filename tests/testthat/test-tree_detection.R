@@ -3,7 +3,7 @@ context("tree_detection")
 LASfile <- system.file("extdata", "MixedConifer.laz", package = "lidR")
 las = lidR::readLAS(LASfile, select = "xyz", filter = "-drop_z_below 0")
 ctg = lidR::catalog(LASfile)
-lidR::opt_cores(ctg) <- 1
+options(lidR.progress = F)
 lidR::opt_progress(ctg) <- FALSE
 lidR::opt_chunk_alignment(ctg) <- c(-10,3812970)
 lidR::opt_chunk_size(ctg) <- 60

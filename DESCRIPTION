@@ -1,21 +1,21 @@
 Package: lidRplugins
 Type: Package
 Title: Extra functions and algorithms for lidR package
-Version: 0.2.0
+Version: 0.3.0
 Authors@R: c(
     person("Jean-Romain", "Roussel", email = "jean-romain.roussel.1@ulaval.ca", role = c("aut", "cre", "cph")),
     person("Jasmin", "Siefert", email = "", role = ("ctb")))
 Description: Extra experimental functions and algorithms for lidR package that are not yet or that will not be included in the lidR package for various reasons.
 License: GPL-3
 Depends:
-    R (>= 3.1.0),methods,lidR (>= 3.0.0)
+    R (>= 3.1.0),methods,lidR (>= 3.1.0)
 Imports:
     data.table,Rcpp,rgeos,stats,fpc,lwgeom,EBImage,glue,sf,raster,sp,rgl
 Suggest: 
     velox
 Remotes:
     git::https://github.com/Jean-Romain/RcppConcaveman.git
-LinkingTo: BH,Rcpp,RcppArmadillo
+LinkingTo: BH,Rcpp,RcppArmadillo,lidR
 ByteCompile: true
 Encoding: UTF-8
 LazyData: true

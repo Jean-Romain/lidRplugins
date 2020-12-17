@@ -2,7 +2,7 @@
 
 namespace Hamraz
 {
-  Profile::Profile(std::vector<PointXYZR* >& disc, PointXYZR Center, double Angle, double Radius, double Width, int Sensitivity, double MDCW, double Epsilon, double CLc, double CLs, double Oc, double Os)
+  Profile::Profile(std::vector<lidR::PointXYZR* >& disc, lidR::PointXYZR Center, double Angle, double Radius, double Width, int Sensitivity, double MDCW, double Epsilon, double CLc, double CLs, double Oc, double Os)
   {
     angle = Angle * M_PI / 180;
     center = Center;
@@ -14,7 +14,7 @@ namespace Hamraz
     cls = CLs;
     oc = Oc;
     os = Os;
-    extremityPoint = PointXYZR(0, 0, 0, 0, 0);
+    extremityPoint = lidR::PointXYZR(0, 0, 0, 0, 0);
 
     extract_profile(disc);  // page 535 section 2.1
     find_inter_tree_gaps(); // page 535 section 2.2.1
@@ -26,7 +26,7 @@ namespace Hamraz
   {
   }
 
-  void Profile::extract_profile(std::vector<PointXYZR*>& disc)
+  void Profile::extract_profile(std::vector<lidR::PointXYZR*>& disc)
   {
     double cosAngle = std::cos(angle);
     double sinAngle = std::sin(angle);
@@ -34,7 +34,7 @@ namespace Hamraz
 
     for(size_t i = 0 ; i < disc.size() ; i++)
     {
-      PointXYZR* p = disc[i];
+      lidR::PointXYZR* p = disc[i];
       double rot_x = (p->x -center.x) * cosAngle - (center.y - p->y) * sinAngle;
       double rot_y = (center.y - p->y) * cosAngle + (p->x -center.x)  * sinAngle;
 
@@ -42,7 +42,7 @@ namespace Hamraz
         points.push_back(p);
     }
 
-    std::sort(points.begin(), points.end(), RSort<PointXYZR>());
+    std::sort(points.begin(), points.end(), lidR::RSort<lidR::PointXYZR>());
   }
 
   // Section 2.2.1 page 535
@@ -114,11 +114,11 @@ namespace Hamraz
     double S_left = 0;
     double S_right = 0;
 
-    //std::vector<PointXYZR*> subProfile_cylind(points_no_gaps.size());
-    std::vector<PointXYZR*> left_windows;
-    std::vector<PointXYZR*> right_windows;
-    std::vector<PointXYZR*> right_windows_prior_mdcw;
-    std::vector<PointXYZR*> right_windows_prior_wrd;
+    //std::vector<lidR::PointXYZR*> subProfile_cylind(points_no_gaps.size());
+    std::vector<lidR::PointXYZR*> left_windows;
+    std::vector<lidR::PointXYZR*> right_windows;
+    std::vector<lidR::PointXYZR*> right_windows_prior_mdcw;
+    std::vector<lidR::PointXYZR*> right_windows_prior_wrd;
 
     do
     {
@@ -223,7 +223,7 @@ namespace Hamraz
       return array[middle];
   }
 
-  void Profile::extract_points_prior( std::vector<PointXYZR*> &subProfile, double limit, std::vector<PointXYZR*> &subProfileSubset )
+  void Profile::extract_points_prior( std::vector<lidR::PointXYZR*> &subProfile, double limit, std::vector<lidR::PointXYZR*> &subProfileSubset )
   {
     size_t i = 1, keep = 0;
     while ( (i < subProfile.size()) && ((subProfile[i]->r - subProfile[0]->r) <= limit) )
@@ -233,7 +233,7 @@ namespace Hamraz
     subProfileSubset.assign(subProfile.begin(), subProfile.begin() + keep + 1 );
   }
 
-  double Profile::steepness(std::vector<PointXYZR*> &subProfile)
+  double Profile::steepness(std::vector<lidR::PointXYZR*> &subProfile)
   {
     std::vector<double> slope(subProfile.size()-1, 0);
 
@@ -294,7 +294,7 @@ namespace Hamraz
 
   // ================================================================================================
 
-  ProfilesManager::ProfilesManager(std::vector<PointXYZR*>& data, PointXYZR Center, double Radius, double Width, int Sensitivity, double MDCW, double Epsilon, double CLc, double CLs, double Oc, double Os)
+  ProfilesManager::ProfilesManager(std::vector<lidR::PointXYZR*>& data, lidR::PointXYZR Center, double Radius, double Width, int Sensitivity, double MDCW, double Epsilon, double CLc, double CLs, double Oc, double Os)
   {
     chord = Radius*1.414;
     alpha = 90;
@@ -325,7 +325,7 @@ namespace Hamraz
   {
   }
 
-  void ProfilesManager::add_next_profiles(std::vector<PointXYZR*>& data)
+  void ProfilesManager::add_next_profiles(std::vector<lidR::PointXYZR*>& data)
   {
 
     size_t s = profiles.size();
@@ -356,9 +356,9 @@ namespace Hamraz
     chord = 2 * rmax * std::sin(alpha/2);
   }
 
-  std::vector<PointXYZ> ProfilesManager::get_polygon()
+  std::vector<lidR::PointXYZ> ProfilesManager::get_polygon()
   {
-    std::vector<PointXYZ> out(profiles.size());
+    std::vector<lidR::PointXYZ> out(profiles.size());
 
     for (size_t i = 0 ; i < profiles.size() ; i++)
     {
