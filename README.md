@@ -24,6 +24,18 @@ Lake delineation from point cloud using `delineate_lakes()`
 remotes::install_github("Jean-Romain/lidRplugins")
 ```
 
+### Powerline segmentation :microscope: :warning:
+
+Powerline segmentation from point cloud using `find_transmissiontowers()`, `classify_transmissiontowers()`, `classify_wires()`, `track_wires()`
+
+<img src="./.img/powerlines.png" width="650px"/>
+
+ 
+```r
+remotes::install_github("Jean-Romain/lidRplugins")
+```
+
+
 To install the package from github make sure you have a working development environment.
 
 * **Windows**: Install [Rtools.exe](https://cran.r-project.org/bin/windows/Rtools/).  
