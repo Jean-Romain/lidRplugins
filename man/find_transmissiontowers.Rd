@@ -56,7 +56,7 @@ dtm <- grid_terrain(las, 2, tin())
 towers <- find_transmissiontowers(las, network, dtm, "waist-type")
 
 plot(las@header)
-plot(towers, add = T, col = towers$deflection + 1)
+plot(towers, add = TRUE, col = towers$deflection + 1)
 arrows(
    towers@coords[,1],
    towers@coords[,2],

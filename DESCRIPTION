@@ -10,16 +10,16 @@ License: GPL-3
 Depends:
     R (>= 3.1.0),methods,lidR (>= 3.1.0)
 Imports:
-    data.table,Rcpp,rgeos,stats,fpc,lwgeom,EBImage,glue,sf,raster,sp,rgl
-Suggest: 
-    velox
+    data.table,Rcpp,rgeos,stats,fpc,lwgeom,EBImage,glue,sf,raster,sp,rgl,rgdal,RcppConcaveman,RMCC,lazyeval
+Suggests: 
+    velox,testthat,covr
 Remotes:
-    git::https://github.com/Jean-Romain/RcppConcaveman.git
+    Jean-Romain/RcppConcaveman,
+    Jean-Romain/RMCC
+    hunzikp/velox
 LinkingTo: BH,Rcpp,RcppArmadillo,lidR
 ByteCompile: true
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.1.1
-Suggests: 
-    testthat,
-    covr
+

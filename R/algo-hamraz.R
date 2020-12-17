@@ -97,9 +97,9 @@ hamraz2016 = function(nps = 0.25, th = 5, MDCW = 1.5, epsilon = 5, CLc = 0.8, Oc
 
     # Preprocess : LSP + remove low point + smooth
     LSP <- lidR::LAS(las@data[, .(X,Y,Z)], las@header)
-    LSP <- lidR::lasfiltersurfacepoints(LSP, nps)    # page 533
-    LSP <- lidR::lasfilter(LSP, Z > th)              # page 534
-    LSP <- lidR::lassmooth(LSP, 3*nps, "gaussian", "square", sigma = nps)
+    LSP <- lidR::filter_surfacepoints(LSP, nps)    # page 533
+    LSP <- lidR::filter_poi(LSP, Z > th)              # page 534
+    LSP <- lidR::smooth_height(LSP, 3*nps, "gaussian", "square", sigma = nps)
 
     # ID initalization
     idTree <- 0L

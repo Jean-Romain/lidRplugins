@@ -334,7 +334,7 @@ lake_detection_vector <- function(las, rlake = NULL, tol = 1/1000, trim = 1000, 
     mlake <- EBImage::bwlabel(mlake)
     suppressWarnings(rlake[] <- mlake)
     rlake[rlake == 0] <- NA
-    las    <- lidR::lasmergespatial(las, rlake, "inplake")
+    las    <- lidR::merge_spatial(las, rlake, "inplake")
     filter <- ~!is.na(inplake)
   } else {
     filter <- NULL
@@ -343,7 +343,7 @@ lake_detection_vector <- function(las, rlake = NULL, tol = 1/1000, trim = 1000, 
   # ---- Segmentation of the water bodies ----
 
   # Tree hull is used to compute waterbodies bboxes
-  bbox <- lidR::tree_hulls(las, type = "bbox", attribute = "inplake")
+  bbox <- lidR::delineate_crowns(las, type = "bbox", attribute = "inplake")
   n    <- length(bbox) + 1
   while (length(bbox) != n) {
     n    <- length(bbox)
@@ -359,8 +359,8 @@ lake_detection_vector <- function(las, rlake = NULL, tol = 1/1000, trim = 1000, 
   while (run) {
     n1  <- lidR::npoints(las)
     n2  <- sum(lidR:::parse_filter(las, filter))
-    las <- lidR::lasdetectshape(las, lidR::shp_hplane(th1, th2, 1 - tol, k), "lake", filter = filter)
-    las <- lidR::lasfilter(las, !lake)
+    las <- lidR::segment_shapes(las, lidR::shp_hplane(th1, th2, 1 - tol, k), "lake", filter = filter)
+    las <- lidR::filter_poi(las, !lake)
     n3  <- lidR::npoints(las)
     dn  <- n1 - n3
     dn  <- dn / n2
@@ -721,7 +721,7 @@ tHulls = function(D, X, s = 5)
       if (!suppressWarnings(rgeos::gIsValid(sp)))
       {
         spsf = sf::st_as_sf(sp)
-        spsf = lwgeom::st_make_valid(spsf)
+        spsf = lwgeom::lwgeom_make_valid(spsf)
         sp = as(spsf, "Spatial")
         sp = as(sp, "SpatialPolygons")
         p = sp@polygons[[1]]

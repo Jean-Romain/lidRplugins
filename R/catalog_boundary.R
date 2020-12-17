@@ -10,6 +10,7 @@
 #' shapes.
 #' @param lengthThreshold numeric. when a segment length is under this threshold, it stops being
 #' considered for further detalization. Higher values result in simpler shapes.
+#' @param simplify numeric: passed to \link[rgeos:gSimplify]{gSimplify}.
 #'
 #' @section Supported processing options:
 #' Supported processing options for more details see the

@@ -35,7 +35,7 @@
 #' towers <- find_transmissiontowers(las, network, dtm, "waist-type")
 #'
 #' plot(las@header)
-#' plot(towers, add = T, col = towers$deflection + 1)
+#' plot(towers, add = TRUE, col = towers$deflection + 1)
 #' arrows(
 #'    towers@coords[,1],
 #'    towers@coords[,2],
@@ -44,7 +44,8 @@
 #'    length = 0.05,
 #'    col = towers$deflection + 1)
 #'
-#' plot(las) %>% add_treetops3d(towers, radius = 5)
+#' x = plot(las)
+#' add_treetops3d(x, towers, radius = 5)
 #' }
 #' @family electric network
 #' @export
@@ -79,7 +80,7 @@ find_transmissiontowers.LAS = function(las, powerline, dtm, type = c("waist-type
   if (debug)
   {
     plot(las@header, main = paste0("Raw powerline network"))
-    plot(pwll, add = T, col = 1:length(pwll))
+    plot(pwll, add = TRUE, col = 1:length(pwll))
   }
 
   pwll <- gJoinLines(pwll, 2)
@@ -93,14 +94,14 @@ find_transmissiontowers.LAS = function(las, powerline, dtm, type = c("waist-type
     stop("Internal error: different sizes for spatial objects", call. = TRUE)
 
   # Transform each segment/section into pol ygon
-  spwlp <- rgeos::gBuffer(spwll, width = buffer, byid = T, capStyle = 'SQUARE')
+  spwlp <- rgeos::gBuffer(spwll, width = buffer, byid = TRUE, capStyle = 'SQUARE')
 
   if (debug)
   {
     plot(las@header, main = "Post-processed lines and buffers")
-    #plot(as(spwll, "SpatialPoints"), add = T)
-    plot(spwll, add = T, col =  1:length(spwll))
-    plot(spwlp, add = T, border =  1:length(spwlp), lty = 3)
+    #plot(as(spwll, "SpatialPoints"), add = TRUE)
+    plot(spwll, add = TRUE, col =  1:length(spwll))
+    plot(spwlp, add = TRUE, border =  1:length(spwlp), lty = 3)
   }
 
   if (debug)
@@ -118,12 +119,12 @@ find_transmissiontowers.LAS = function(las, powerline, dtm, type = c("waist-type
 
     # Clip the las to work only within the buffer of the section of the powerline
     # TODO: we need only XYZ, we can save memory with a better clipping
-    las <- lidR::lasclip(olas, pwlp)
+    las <- lidR::clip_roi(olas, pwlp)
     if (!is(las, "LAS")) stop("Internal error: object is not a LAS.")
     if (lidR::is.empty(las)) stop("Internal error: object LAS is empty.")
 
     # Merge the DTM, it gonna be useful later on
-    las <- lidR::lasmergespatial(las, dtm, "dtm")
+    las <- lidR::merge_spatial(las, dtm, "dtm")
 
     # Compute the orientation of the wires and towers
     orientation <- sp::coordinates(pwll)[[1]][[1]]
@@ -135,8 +136,8 @@ find_transmissiontowers.LAS = function(las, powerline, dtm, type = c("waist-type
 
     if (debug)
     {
-      plot(towers, add = T, col = "gray40")
-      text(towers@coords[,1], towers@coords[,2]+40, 1:length(towers), cex = 0.8, col = k)
+      plot(towers, add = TRUE, col = "gray40")
+      graphics::text(towers@coords[,1], towers@coords[,2]+40, 1:length(towers), cex = 0.8, col = k)
       #plot(las) %>% add_treetops3d(towers, radius = 5)
     }
 
@@ -152,7 +153,7 @@ find_transmissiontowers.LAS = function(las, powerline, dtm, type = c("waist-type
 
     if (debug)
     {
-      plot(rtowers, add = T, col = k)
+      plot(rtowers, add = TRUE, col = k)
       graphics::text(rtowers@coords[,1], rtowers@coords[,2]+40, 1:length(rtowers), cex = 0.8, col = k)
       #plot(las) %>% add_treetops3d(rtowers, radius = 5)
     }
@@ -160,8 +161,8 @@ find_transmissiontowers.LAS = function(las, powerline, dtm, type = c("waist-type
     # Clean some remaining false positive in deflection
     # (I don't remember which case it covers)
     if (length(output) > 1) {
-      pwlp2 <- rgeos::gBuffer(pwlp, width = -10, byid = T, capStyle = 'SQUARE')
-      keep = rgeos::gWithin(rtowers, pwlp2, byid = T)
+      pwlp2 <- rgeos::gBuffer(pwlp, width = -10, byid = TRUE, capStyle = 'SQUARE')
+      keep = rgeos::gWithin(rtowers, pwlp2, byid = TRUE)
       towers <- rtowers[as.logical(keep),]
     } else {
       towers <- rtowers
@@ -188,13 +189,13 @@ find_transmissiontowers.LAS = function(las, powerline, dtm, type = c("waist-type
     if (debug & any_deflection)
     {
       plot(olas@header, main = "All towers before deflection correction")
-      plot(ptowers, add = T, col = ptowers$deflection + 1)
-      #plot(textent, add = T,  border = tlocation$deflection + 1)
+      plot(ptowers, add = TRUE, col = ptowers$deflection + 1)
+      #plot(textent, add = TRUE,  border = tlocation$deflection + 1)
       graphics::arrows(ptowers@coords[,1], ptowers@coords[,2], ptowers@coords[,1] + 100 * ptowers$ux,  ptowers@coords[,2] + 100 * ptowers$uy, length = 0.05, col = ptowers$deflection + 1)
     }
 
     # last correction for deflection
-    in_several_lines = rgeos::gContains(spwlp, ptowers, byid = T)
+    in_several_lines = rgeos::gContains(spwlp, ptowers, byid = TRUE)
     remove = rep(FALSE, length(ptowers))
 
     for (k in 1:length(output))
@@ -208,7 +209,7 @@ find_transmissiontowers.LAS = function(las, powerline, dtm, type = c("waist-type
       in_this_lines = in_several_lines[,k]
 
       good_angle = abs(ptowers$theta - angle) < 10e-3
-      remove[in_this_lines & !good_angle & !ptowers$deflection] <- T
+      remove[in_this_lines & !good_angle & !ptowers$deflection] <- TRUE
     }
 
     ptowers = ptowers[!remove,]
@@ -217,8 +218,8 @@ find_transmissiontowers.LAS = function(las, powerline, dtm, type = c("waist-type
     if (debug)
     {
       plot(olas@header, main = "Final towers")
-      plot(ptowers, add = T, col = ptowers$deflection + 1)
-      #plot(textent, add = T,  border = tlocation$deflection + 1)
+      plot(ptowers, add = TRUE, col = ptowers$deflection + 1)
+      #plot(textent, add = TRUE,  border = tlocation$deflection + 1)
       graphics::arrows(ptowers@coords[,1], ptowers@coords[,2], ptowers@coords[,1] + 100 * ptowers$ux,  ptowers@coords[,2] + 100 * ptowers$uy, length = 0.05, col = ptowers$deflection + 1)
     }
 
@@ -263,17 +264,17 @@ find_transmissiontowers.LAScatalog = function(las, powerline, dtm, type = c("wai
 # the will be cleaned later. What matter is not having false negative.
 tower.candidates = function(las, dtm, tower.spec, angle)
 {
-  splas = lasfiltersurfacepoints(las, 1)
+  splas = filter_surfacepoints(las, 1)
 
   # We work with relative elevations both in raw + smoothed data
   #nlas <- lidR::lasnormalize(las, dtm)
-  ssplas <- lidR::lassmooth(splas, 10)
+  ssplas <- lidR::smooth_height(splas, 10)
 
   # Keep the top 5 m below the towers. With this we are sure to remove most of the noise
   Z <- NULL
-  sub <-  lidR::lasfilter(splas, Z > dtm + tower.spec$height[1] - 5)
-  #nsub <- lidR::lasfilter(nlas, Z > tower.spec$height[1] - 5)
-  ssub <- lidR::lasfilter(ssplas, Z > dtm + tower.spec$height[1]/2)
+  sub <-  lidR::filter_poi(splas, Z > dtm + tower.spec$height[1] - 5)
+  #nsub <- lidR::filter_poi(nlas, Z > tower.spec$height[1] - 5)
+  ssub <- lidR::filter_poi(ssplas, Z > dtm + tower.spec$height[1]/2)
 
   # Find the local max using an oriented windows using both raw an normalized data
   # This because in both we could miss some some towers but not the same.
@@ -324,15 +325,15 @@ tower.rectification <- function(las, towers, tower.spec, angle, dtm)
 {
   Z <- NULL
 
-  buffer.towers <- rgeos::gBuffer(towers, width = tower.spec$length[2]/2*1.3, byid = T)
-  las2   <- lidR::lasfilter(las, Z > dtm + 2)
+  buffer.towers <- rgeos::gBuffer(towers, width = tower.spec$length[2]/2*1.3, byid = TRUE)
+  las2   <- lidR::filter_poi(las, Z > dtm + 2)
 
   coords <- vector("list", length(buffer.towers))
   for (i in 1:length(buffer.towers))
   {
     Zbottom <- raster::extract(dtm, towers[i,])
-    sub2 <- lidR::lasclip(las2, buffer.towers[i,])
-    sub2 <- lidR::lasfilter(sub2, Z > Zbottom)
+    sub2 <- lidR::clip_roi(las2, buffer.towers[i,])
+    sub2 <- lidR::filter_poi(sub2, Z > Zbottom)
     coords[[i]] <- tower.correction(sub2, angle, tower.spec, Zbottom)
   }
 
@@ -380,7 +381,7 @@ tower.correction <-  function(las, angle, tower.spec, Zbottom)
   # A tower is a continuous structure horizontally
   a <- angle + pi/2
   rot <- matrix(c(cos(a), sin(a), -sin(a), cos(a)), ncol = 2)
-  coords <- as.matrix(lidR:::coordinates(lasfilter(las, Z > Zm - tower.spec$wire.distance.to.top - 2)))
+  coords <- as.matrix(lidR:::coordinates(filter_poi(las, Z > Zm - tower.spec$wire.distance.to.top - 2)))
   zero <- sp::bbox(las)[,1]
   coords[,1] <- coords[,1] - zero[1]
   coords[,2] <- coords[,2] - zero[2]
@@ -609,9 +610,9 @@ gJoinLines = function(sl, th = 2)
   cc <- lapply(cc, function(x) { do.call(rbind, x) })
   cc <- do.call(rbind, cc)
   sp <- sp::SpatialPoints(cc)
-  m <- rgeos::gWithinDistance(sp, dist = 5, byid = T)
+  m <- rgeos::gWithinDistance(sp, dist = 5, byid = TRUE)
   m[upper.tri(m, diag = TRUE)] <- FALSE
-  join <- which(m, arr.ind = T)
+  join <- which(m, arr.ind = TRUE)
 
   if (nrow(join) > 1) stop("Internal error: to many lines to join")
   if (nrow(join) == 0) return(sl)

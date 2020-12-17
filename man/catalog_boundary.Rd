@@ -15,6 +15,8 @@ shapes.}
 
 \item{lengthThreshold}{numeric. when a segment length is under this threshold, it stops being
 considered for further detalization. Higher values result in simpler shapes.}
+
+\item{simplify}{numeric: passed to \link[rgeos:gSimplify]{gSimplify}.}
 }
 \value{
 A LAScatalog with true boundaries
