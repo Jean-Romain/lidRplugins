@@ -29,7 +29,7 @@ Powerline segmentation from point cloud using `find_transmissiontowers()`, `clas
 
 LAS files records the bounding boxes of the point cloud. `catalog_boundaries()` computes their actual boundaries.
 
-<img src="./.img/boundaries.png" width="500px"/>
+<img src="./.img/boundaries.png" width="400px"/>
 
 ### Various  tree detection/segmentation from peer-reviewed papers :zap:
 
