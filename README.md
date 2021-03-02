@@ -25,13 +25,13 @@ Powerline segmentation from point cloud using `find_transmissiontowers()`, `clas
 
 <img src="./.img/powerlines.png" width="500px"/>
 
-### LiDAR tiles boundaries :octocat:
+### Tile boundaries :octocat:
 
 LAS files records the bounding boxes of the point cloud. `catalog_boundaries()` computes their actual boundaries.
 
 <img src="./.img/boundaries.png" width="500px"/>
 
-### Various  tree detection/segmentation from peer-reviewed papers :zap:
+### Various tree detection/segmentation from peer-reviewed papers :zap:
 
 - `ptree()`: Vega, C., Hamrouni, a., El Mokhtari, S., Morel, J., Bock, J., Renaud, J.-P., … Durrieu, S. (2014). PTrees: A point-based approach to forest tree extraction from lidar data. International Journal of Applied Earth Observation and Geoinformation, 33, 98–108. https://doi.org/10.1016/j.jag.2014.05.001
 - `hamraz2016()`: Hamraz, H., Contreras, M. A., & Zhang, J. (2016). A robust approach for tree segmentation in deciduous forests using small-footprint airborne LiDAR data. International Journal of Applied Earth Observation and Geoinformation, 52, 532–541. https://doi.org/10.1016/j.cageo.2017.02.017
