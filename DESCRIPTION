@@ -15,7 +15,7 @@ Suggests:
     velox,testthat,covr
 Remotes:
     Jean-Romain/RcppConcaveman,
-    Jean-Romain/RMCC
+    Jean-Romain/RMCC,
     hunzikp/velox
 LinkingTo: BH,Rcpp,RcppArmadillo,lidR
 ByteCompile: true
