@@ -42,7 +42,7 @@ classify_wires.LAS = function(las, wires, dtm)
 
   SECTIONS = unique(wires$section)
 
-  las2 <- lasmergespatial(las, dtm, "dtm")
+  las2 <- merge_spatial(las, dtm, "dtm")
   las2@data$ID <- 1:npoints(las)
 
   for (section in SECTIONS)
@@ -61,7 +61,7 @@ classify_wires.LAS = function(las, wires, dtm)
     lwires <- sp::SpatialLines(list(sp::Lines(list(sp::Line(wire@coords)), ID = "1")))
     pwires <- rgeos::gBuffer(lwires, width = 0.5*tower.spec$length[2], capStyle = "SQUARE")
 
-    sub <- lasclip(las2, extent(pwires))
+    sub <- clip_roi(las2, raster::extent(pwires))
     layout <- lidR:::rOverlay(sub, 10)
     cloth <- raster::rasterize(wire, layout)$z
 
@@ -69,8 +69,8 @@ classify_wires.LAS = function(las, wires, dtm)
     for (k in 1:2)
       cloth <- raster::focal(cloth, ker, fun = stats::median, na.rm = TRUE, pad = T)
 
-    sub <- lasmergespatial(sub, pwires, "pwires")
-    sub <- lasmergespatial(sub, cloth, "cloth")
+    sub <- merge_spatial(sub, pwires, "pwires")
+    sub <- merge_spatial(sub, cloth, "cloth")
     sub$Classification[sub$id == 1 & sub$Z > sub$cloth - thresholds & sub$Classification != lidR::LASTRANSMISSIONTOWER] <- lidR::LASWIRECONDUCTOR
     ids = sub$ID[sub$Classification == lidR::LASWIRECONDUCTOR]
     las@data[["Classification"]][ids] <- lidR::LASWIRECONDUCTOR
