@@ -12,7 +12,7 @@ Depends:
 Imports:
     data.table,Rcpp,rgeos,stats,fpc,lwgeom,EBImage,glue,sf,raster,sp,rgl,rgdal,RcppConcaveman,RMCC,lazyeval
 Suggests: 
-    velox,testthat,covr
+    velox,testthat,covr,hexbin
 Remotes:
     Jean-Romain/RcppConcaveman,
     Jean-Romain/RMCC,
