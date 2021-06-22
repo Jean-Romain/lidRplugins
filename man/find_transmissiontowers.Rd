@@ -65,7 +65,8 @@ arrows(
    length = 0.05,
    col = towers$deflection + 1)
 
-plot(las) \%>\% add_treetops3d(towers, radius = 5)
+x = plot(las)
+add_treetops3d(x, towers, radius = 5)
 }
 }
 \concept{electric network}
