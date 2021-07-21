@@ -51,7 +51,7 @@ computation speed. The lower the value, the faster the method.}
 }
 \description{
 This functions is made to be used in \link[lidR:segment_trees]{segment_trees}. It implements an algorithms for
-tree segmentation based on paper written by Hamraz et al. (2012). See references and details.
+tree segmentation based on paper written by Hamraz et al. (2016). See references and details.
 }
 \details{
 This function has been written by the \code{lidR} authors from the original article. We made our

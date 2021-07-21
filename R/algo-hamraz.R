@@ -3,7 +3,7 @@
 #' Individual Tree Segmentation Algorithm
 #'
 #' This functions is made to be used in \link[lidR:segment_trees]{segment_trees}. It implements an algorithms for
-#' tree segmentation based on paper written by Hamraz et al. (2012). See references and details.
+#' tree segmentation based on paper written by Hamraz et al. (2016). See references and details.
 #'
 #' This function has been written by the \code{lidR} authors from the original article. We made our
 #' best to implement as far as possible exactly what is written in the original paper but we cannot
