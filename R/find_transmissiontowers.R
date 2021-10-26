@@ -278,9 +278,9 @@ tower.candidates = function(las, dtm, tower.spec, angle)
 
   # Find the local max using an oriented windows using both raw an normalized data
   # This because in both we could miss some some towers but not the same.
-  rtowers <- lidR::find_localmaxima(sub, c(200, tower.spec$length[2]*1.2, angle))
+  rtowers <- find_localmaxima(sub, c(200, tower.spec$length[2]*1.2, angle))
   #ntowers <- lidR::local_maximum(nsub, c(150, tower.spec$length[2]*1.2, angle))
-  stowers <- lidR::find_localmaxima(ssub, c(200, tower.spec$length[2]*1.2, angle))
+  stowers <- find_localmaxima(ssub, c(200, tower.spec$length[2]*1.2, angle))
 
   #ntowers$Z <- ntowers$Zref
   #ntowers$Zref <- NULL
