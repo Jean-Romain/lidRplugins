@@ -20,7 +20,7 @@
 #' LASfile <- system.file("extdata", "wires.laz", package="lidRplugins")
 #' wireshp <- system.file("extdata", "wires.shp", package="lidRplugins")
 #' las <- readLAS(LASfile, select = "xyzc")
-#' network <- shapefile(wireshp)
+#' network <- raster::shapefile(wireshp)
 #'
 #' # Ugly dtm because data is an Y
 #' dtm <- grid_terrain(las, 2, tin())

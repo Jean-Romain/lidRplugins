@@ -62,7 +62,7 @@ ptrees = function(k, hmin = 2, nmax = 7L)
   f = function(las)
   {
     context <- tryCatch({get("lidR.context", envir = parent.frame())}, error = function(e) {return(NULL)})
-    lidR:::assert_is_valid_context(c("find_trees", "segment_trees"), "ptrees")
+    lidR:::assert_is_valid_context(c(lidR:::LIDRCONTEXTITD, lidR:::LIDRCONTEXTITS), "ptrees")
 
     . <- X <- Y <- Z <- treeID <- NULL
 
@@ -78,7 +78,7 @@ ptrees = function(k, hmin = 2, nmax = 7L)
       apices[, treeID := 1:.N]
 
       output = sp::SpatialPointsDataFrame(apices[, .(X,Y)], apices[, .(treeID, Z)])
-      output@proj4string = las@proj4string
+      output@proj4string = lidR::projection(las, FALSE)
       output@bbox = sp::bbox(las)
       return(output)
     }

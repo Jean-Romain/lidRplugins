@@ -102,8 +102,8 @@ multichm = function(res = 1, layer_thickness = 0.5, dist_2d = 3, dist_3d = 5, us
         lm       <- raster::as.data.frame(lm)
         data.table::setDT(lm)
         LM[[i]]  <- lm
-        las_copy <- lidR::lasmergespatial(las_copy, chm95, "chm95")
-        las_copy <- lidR::lasfilter(las_copy, Z < chm95 - layer_thickness)
+        las_copy <- lidR::merge_spatial(las_copy, chm95, "chm95")
+        las_copy <- lidR::filter_poi(las_copy, Z < chm95 - layer_thickness)
 
         i <- i + 1
       }
@@ -132,7 +132,7 @@ multichm = function(res = 1, layer_thickness = 0.5, dist_2d = 3, dist_3d = 5, us
     detected = LM[detected]
     detected[, treeID := 1:.N]
 
-    output <- sp::SpatialPointsDataFrame(detected[, 3:4], detected[, 1:2], proj4string = las@proj4string)
+    output <- sp::SpatialPointsDataFrame(detected[, 3:4], detected[, 1:2], proj4string = lidR::projection(las, FALSE))
     return(output)
   }
 

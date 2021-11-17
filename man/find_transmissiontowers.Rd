@@ -49,7 +49,7 @@ towers. The method is supervised by a map of the electric network and the tower 
 LASfile <- system.file("extdata", "wires.laz", package="lidRplugins")
 wireshp <- system.file("extdata", "wires.shp", package="lidRplugins")
 las <- readLAS(LASfile, select = "xyzc")
-network <- shapefile(wireshp)
+network <- raster::shapefile(wireshp)
 
 dtm <- grid_terrain(las, 2, tin())
 

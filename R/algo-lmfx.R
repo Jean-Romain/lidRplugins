@@ -81,7 +81,7 @@ lmfx = function(ws, hmin = 2, dist_2d = 3)
     detected[, treeID := 1:.N]
 
     output = sp::SpatialPointsDataFrame(detected[, 1:2], detected[, 3:4])
-    output@proj4string = las@proj4string
+    output@proj4string = lidR::projection(las, FALSE)
     output@bbox = sp::bbox(las)
     return(output)
   }

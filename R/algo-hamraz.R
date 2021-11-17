@@ -97,8 +97,8 @@ hamraz2016 = function(nps = 0.25, th = 5, MDCW = 1.5, epsilon = 5, CLc = 0.8, Oc
 
     # Preprocess : LSP + remove low point + smooth
     LSP <- lidR::LAS(las@data[, .(X,Y,Z)], las@header)
-    LSP <- lidR::filter_surfacepoints(LSP, nps)    # page 533
-    LSP <- lidR::filter_poi(LSP, Z > th)              # page 534
+    LSP <- lidR::decimate_points(LSP, lidR::highest(nps))    # page 533
+    LSP <- lidR::filter_poi(LSP, Z > th)                     # page 534
     LSP <- lidR::smooth_height(LSP, 3*nps, "gaussian", "square", sigma = nps)
 
     # ID initalization
@@ -118,12 +118,11 @@ hamraz2016 = function(nps = 0.25, th = 5, MDCW = 1.5, epsilon = 5, CLc = 0.8, Oc
         utils::setTxtProgressBar(pbar, npoints - npts)
 
       # (1) Locate the global maximum GMX (page 534)
-
       i     <- which.max(LSP@data$Z)
       GMX   <- LSP@data[i]
       GMX$i <- i
 
-      disc  <- lidR::lasclipCircle(LSP, GMX$X, GMX$Y, R)      # Extract a disc around GMX
+      disc  <- lidR::clip_circle(LSP, GMX$X, GMX$Y, R)      # Extract a disc around GMX
       disc@data$R <- with(disc@data, sqrt((X - GMX$X)^2 + (Y - GMX$Y)^2))       # Compute cylindrical cordinates
 
       # (2-4) Find the convex hull according to Hamraz rules
@@ -146,7 +145,6 @@ hamraz2016 = function(nps = 0.25, th = 5, MDCW = 1.5, epsilon = 5, CLc = 0.8, Oc
         area <- lidR:::polygon_area(ch$x, ch$y)
       }
 
-
       # (5) cluster all LSPs encompassed within the convex hull and assign them as the current tallest tree crown
       in_p <- logical(nrow(LSP@data))
 
@@ -159,8 +157,8 @@ hamraz2016 = function(nps = 0.25, th = 5, MDCW = 1.5, epsilon = 5, CLc = 0.8, Oc
       else
       {
         # Find the points that belong in the convex hull
-        wkt <- sf::st_as_text(sf::st_polygon(list(as.matrix(ch))), digits = 10)
-        in_p <- lidR:::C_in_polygon(LSP, wkt, 1L)
+        wkt <- sf::st_sfc(sf::st_polygon(list(as.matrix(ch))), crs = st_crs(las))
+        in_p <- !is.na(lidR:::point_in_polygons(LSP, wkt))
 
         # If no point found within this polygon only GMX will be remove
         if (sum(in_p) == 0)
@@ -171,7 +169,7 @@ hamraz2016 = function(nps = 0.25, th = 5, MDCW = 1.5, epsilon = 5, CLc = 0.8, Oc
       tree = LSP@data[in_p]
 
       # extract the rest of the forest as a LAS
-      LSP <- suppressWarnings(lidR::lasfilter(LSP, !in_p))
+      LSP <- suppressWarnings(lidR::filter_poi(LSP, !in_p))
 
       #plot(LSP@data$X, LSP@data$Y, col = lidR:::set.colors(LSP@data$Z, height.colors(50)), asp = 1)
 
@@ -186,8 +184,8 @@ hamraz2016 = function(nps = 0.25, th = 5, MDCW = 1.5, epsilon = 5, CLc = 0.8, Oc
       if (area > pi*(MDCW/2)^2)
       {
         idTree   <- idTree + 1L
-        wkt <- sf::st_as_text(sf::st_polygon(list(as.matrix(ch))), digits = 10)
-        las_in_p <- lidR:::C_in_polygon(las, wkt, 1L)
+        wkt <- sf::st_sfc(sf::st_polygon(list(as.matrix(ch))),  crs = st_crs(las))
+        las_in_p <- !is.na(lidR:::point_in_polygons(las, wkt))
 
         # a new ID is attributed only to points that don't already have an ID (dominant has precedence)
         update <- las_in_p & is.na(treeID)
