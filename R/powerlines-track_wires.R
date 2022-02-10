@@ -24,6 +24,10 @@
 #' a pure guess, \code{section} attributes an ID to each wire section i.e. between two towers, \code{ID}
 #' attributes and ID to each powerline \code{type} store the transmission tower type.
 #'
+#' @references
+#' Roussel J, Achim A, Auty D. 2021. Classification of high-voltage power line structures in low density
+#' ALS data acquired over broad non-urban areas. PeerJ Computer Science 7:e672 https://doi.org/10.7717/peerj-cs.672
+#'
 #' @examples
 #' \donttest{
 #' # A simple file with wires already clipped from 4 files + shapefile
