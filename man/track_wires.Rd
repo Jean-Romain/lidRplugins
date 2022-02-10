@@ -66,7 +66,7 @@ col[wires$virtual & col == "darkorange"] <- "goldenrod1"
 
 plot(header(las))
 plot(towers, add = TRUE, col = towers$deflection + 1)
-plot(wires, col = col, add = T, cex = 0.1)
+plot(wires, col = col, add = TRUE, cex = 0.1)
 
 plot(las, clear_artifacts = FALSE)
 rgl::points3d(wires@coords[,1], wires@coords[,2], wires$z, col = col, size = 5)
