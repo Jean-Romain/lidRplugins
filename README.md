@@ -2,7 +2,7 @@
 [![Travis build status](https://travis-ci.org/Jean-Romain/lidRplugins.svg?branch=master)](https://travis-ci.com/Jean-Romain/lidRplugins)
 [![Codecov test coverage](https://codecov.io/gh/Jean-Romain/lidRplugins/branch/master/graph/badge.svg)](https://codecov.io/gh/Jean-Romain/lidRplugins?branch=master)
 
-This package contains functions and algorithms to extend the [lidR](https://github.com/Jean-Romain/lidR) package (versions >= 3.1). These functions or algorithms are not yet or will not be included in the `lidR` package either because they are:
+This package contains functions and algorithms to extend the [lidR](https://github.com/r-lidar/lidR) package (versions >= 4.0.0). These functions or algorithms are not yet or will not be included in the `lidR` package either because they are:
 
 - :microscope: **Experimental** and not supported by a peer-reviewed and accessible publications.
 - :zap: **Non suitable for `lidR`**  usually because they are not sufficiently efficient. 
