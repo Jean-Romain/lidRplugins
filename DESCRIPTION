@@ -1,7 +1,7 @@
 Package: lidRplugins
 Type: Package
 Title: Extra functions and algorithms for lidR package
-Version: 0.3.0
+Version: 0.4.0
 Authors@R: c(
     person("Jean-Romain", "Roussel", email = "jean-romain.roussel.1@ulaval.ca", role = c("aut", "cre", "cph")),
     person("Jasmin", "Siefert", email = "", role = ("ctb")))
@@ -14,8 +14,7 @@ Imports:
 Suggests: 
     velox,testthat,covr,hexbin
 Remotes:
-    Jean-Romain/RcppConcaveman,
-    Jean-Romain/RMCC,
+    r-lidar/lidR
     hunzikp/velox
 LinkingTo: BH,Rcpp,RcppArmadillo,lidR
 ByteCompile: true
