@@ -19,11 +19,10 @@
 #' # of the network
 #' LASfile <- system.file("extdata", "wires.laz", package="lidRplugins")
 #' wireshp <- system.file("extdata", "wires.shp", package="lidRplugins")
+#' dtmtif  <- system.file("extdata", "wire-dtm.tif", package="lidRplugins")
 #' las <- readLAS(LASfile, select = "xyzc")
-#' network <- raster::shapefile(wireshp)
-#'
-#' # Ugly dtm because data is an Y
-#' dtm <- grid_terrain(las, 2, tin())
+#' network <- sf::st_read(wireshp)
+#' dtm <- raster::raster(dtmtif)
 #'
 #' towers <- find_transmissiontowers(las, network, dtm, "waist-type")
 #' las <- classify_transmissiontowers(las, towers, dtm)
@@ -64,6 +63,8 @@ classify_wires.LAS = function(las, wires, dtm)
 
     lwires <- sp::SpatialLines(list(sp::Lines(list(sp::Line(wire@coords)), ID = "1")))
     pwires <- rgeos::gBuffer(lwires, width = 0.5*tower.spec$length[2], capStyle = "SQUARE")
+    raster::crs(lwires) <- raster::crs(wires)
+    raster::crs(pwires) <- raster::crs(wires)
 
     sub <- clip_roi(las2, raster::extent(pwires))
     layout <- lidR:::rOverlay(sub, 10)
@@ -75,7 +76,8 @@ classify_wires.LAS = function(las, wires, dtm)
 
     sub <- merge_spatial(sub, pwires, "pwires")
     sub <- merge_spatial(sub, cloth, "cloth")
-    sub$Classification[sub$id == 1 & sub$Z > sub$cloth - thresholds & sub$Classification != lidR::LASTRANSMISSIONTOWER] <- lidR::LASWIRECONDUCTOR
+    sub$cloth[is.nan(sub$cloth)] <- Inf
+    sub$Classification[sub$Z > sub$cloth - thresholds & sub$Classification != lidR::LASTRANSMISSIONTOWER] <- lidR::LASWIRECONDUCTOR
     ids = sub$ID[sub$Classification == lidR::LASWIRECONDUCTOR]
     las@data[["Classification"]][ids] <- lidR::LASWIRECONDUCTOR
 

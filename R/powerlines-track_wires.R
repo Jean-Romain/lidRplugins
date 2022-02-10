@@ -34,11 +34,10 @@
 #' # of the network
 #' LASfile <- system.file("extdata", "wires.laz", package="lidRplugins")
 #' wireshp <- system.file("extdata", "wires.shp", package="lidRplugins")
+#' dtmtif  <- system.file("extdata", "wire-dtm.tif", package="lidRplugins")
 #' las <- readLAS(LASfile, select = "xyzc")
-#' network <- shapefile(wireshp)
-#'
-#' # Ugly dtm because data is an Y
-#' dtm <- grid_terrain(las, 2, tin())
+#' network <- sf::st_read(wireshp)
+#' dtm <- raster::raster(dtmtif)
 #'
 #' towers <- find_transmissiontowers(las, network, dtm, "waist-type")
 #' wires <- track_wires(towers, network, dtm, "waist-type")
@@ -50,7 +49,7 @@
 #' col[wires$virtual & col == "darkorchid"] <- "plum"
 #' col[wires$virtual & col == "darkorange"] <- "goldenrod1"
 #'
-#' plot(las@header)
+#' plot(header(las))
 #' plot(towers, add = T, col = towers$deflection + 1)
 #' plot(wires, col = col, add = T, cex = 0.1)
 #'
@@ -61,6 +60,8 @@
 #' @export
 track_wires <- function(towers, powerline, dtm, type = c("waist-type", "double-circuit"), debug = FALSE)
 {
+  if (is(powerline, "sf") | is(powerline, "sfc")) powerline <- sf::as_Spatial(powerline)
+
   tower.spec <- get_tower_spec(type)
 
   tlocation <- towers
@@ -208,7 +209,7 @@ track_wires <- function(towers, powerline, dtm, type = c("waist-type", "double-c
 
       if (anyNA(Z)) stop("Impossible to find DTM value at the edge of the raster. The DTM is not large enought.")
 
-      vtowers <- sp::SpatialPointsDataFrame(vtowers, data.frame(Z, deflection = FALSE, virtual = TRUE), proj4string = proj)
+      vtowers <- sp::SpatialPointsDataFrame(vtowers, data.frame(Z, deflection = FALSE, virtual = TRUE))
       tow <- rbind(tow, vtowers)
       #plot(tow, add = T, col = tow$virtual + 1, cex = 2)
 
@@ -267,7 +268,7 @@ track_wires <- function(towers, powerline, dtm, type = c("waist-type", "double-c
     Hxy = data.table::rbindlist(Hxy)
     sp::coordinates(Hxy) = ~x+y
     #rgl::points3d(Hxy@coords[,1],Hxy@coords[,2], Hxy$z)
-    projection(Hxy) <- proj
+    raster::projection(Hxy) <- proj
     Hxy <- Hxy[!is.na(sp::over(Hxy, pwlp)),]
     HXY[[kk]] <- Hxy
   }

@@ -48,14 +48,14 @@ towers. The method is supervised by a map of the electric network and the tower 
 # of the network
 LASfile <- system.file("extdata", "wires.laz", package="lidRplugins")
 wireshp <- system.file("extdata", "wires.shp", package="lidRplugins")
+dtmtif  <- system.file("extdata", "wire-dtm.tif", package="lidRplugins")
 las <- readLAS(LASfile, select = "xyzc")
-network <- raster::shapefile(wireshp)
-
-dtm <- grid_terrain(las, 2, tin())
+network <- sf::st_read(wireshp)
+dtm <- raster::raster(dtmtif)
 
 towers <- find_transmissiontowers(las, network, dtm, "waist-type")
 
-plot(las@header)
+plot(header(las))
 plot(towers, add = TRUE, col = towers$deflection + 1)
 arrows(
    towers@coords[,1],

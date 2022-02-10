@@ -31,14 +31,14 @@
 #' # of the network
 #' LASfile <- system.file("extdata", "wires.laz", package="lidRplugins")
 #' wireshp <- system.file("extdata", "wires.shp", package="lidRplugins")
+#' dtmtif  <- system.file("extdata", "wire-dtm.tif", package="lidRplugins")
 #' las <- readLAS(LASfile, select = "xyzc")
-#' network <- raster::shapefile(wireshp)
-#'
-#' dtm <- grid_terrain(las, 2, tin())
+#' network <- sf::st_read(wireshp)
+#' dtm <- raster::raster(dtmtif)
 #'
 #' towers <- find_transmissiontowers(las, network, dtm, "waist-type")
 #'
-#' plot(las@header)
+#' plot(header(las))
 #' plot(towers, add = TRUE, col = towers$deflection + 1)
 #' arrows(
 #'    towers@coords[,1],
@@ -61,9 +61,11 @@ find_transmissiontowers = function(las, powerline, dtm, type = c("waist-type", "
 #' @export
 find_transmissiontowers.LAS = function(las, powerline, dtm, type = c("waist-type", "double-circuit"), buffer = 125, debug = FALSE)
 {
+  if (is(powerline, "sf") | is(powerline, "sfc")) powerline <- sf::as_Spatial(powerline)
   lidR:::assert_is_all_of(powerline, "SpatialLinesDataFrame")
   lidR:::assert_is_all_of(dtm, "RasterLayer")
   lidR:::assert_all_are_positive(buffer)
+  stopifnot(st_crs(las) == sf::st_crs(powerline))
 
   if (debug)
   {

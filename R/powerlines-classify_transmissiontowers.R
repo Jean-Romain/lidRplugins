@@ -23,11 +23,10 @@
 #' # of the network
 #' LASfile <- system.file("extdata", "wires.laz", package="lidRplugins")
 #' wireshp <- system.file("extdata", "wires.shp", package="lidRplugins")
+#' dtmtif  <- system.file("extdata", "wire-dtm.tif", package="lidRplugins")
 #' las <- readLAS(LASfile, select = "xyzc")
-#' network <- raster::shapefile(wireshp)
-#'
-#' # Ugly dtm because data is an Y
-#' dtm <- grid_terrain(las, 2, tin())
+#' network <- sf::st_read(wireshp)
+#' dtm <- raster::raster(dtmtif)
 #'
 #' towers <- find_transmissiontowers(las, network, dtm, "waist-type")
 #' las <- classify_transmissiontowers(las, towers, dtm)
@@ -45,8 +44,8 @@ classify_transmissiontowers = function(las, towers, dtm, threshold = 2)
 classify_transmissiontowers.LAS = function(las, towers, dtm, threshold = 2)
 {
   towers <- tower.boundingbox(towers)
-  tmp <- lidR::lasmergespatial(las, towers, "towers")
-  tmp <- lidR::lasnormalize(tmp, dtm)
+  tmp <- lidR::merge_spatial(las, towers, "towers")
+  tmp <- lidR::normalize_height(tmp, dtm)
   las@data$Classification[tmp$Z > threshold & tmp$towers == TRUE] <- lidR::LASTRANSMISSIONTOWER
   return(las)
 }

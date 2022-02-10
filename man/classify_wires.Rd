@@ -25,11 +25,10 @@ tower classification must be performed first.
 # of the network
 LASfile <- system.file("extdata", "wires.laz", package="lidRplugins")
 wireshp <- system.file("extdata", "wires.shp", package="lidRplugins")
+dtmtif  <- system.file("extdata", "wire-dtm.tif", package="lidRplugins")
 las <- readLAS(LASfile, select = "xyzc")
-network <- raster::shapefile(wireshp)
-
-# Ugly dtm because data is an Y
-dtm <- grid_terrain(las, 2, tin())
+network <- sf::st_read(wireshp)
+dtm <- raster::raster(dtmtif)
 
 towers <- find_transmissiontowers(las, network, dtm, "waist-type")
 las <- classify_transmissiontowers(las, towers, dtm)

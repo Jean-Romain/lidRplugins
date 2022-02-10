@@ -1,30 +1,3 @@
-# ===============================================================================
-#
-# PROGRAMMERS:
-#
-# jean-romain.roussel.1@ulaval.ca  -  https://github.com/Jean-Romain/lidR
-#
-# COPYRIGHT:
-#
-# Copyright 2019 Jean-Romain Roussel
-#
-# This file is part of the lidR R package.
-#
-# lidR is free software: you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>
-#
-# ===============================================================================
-
 #' Individual waterbodies segmentation
 #'
 #' Individual surfacic waterbodies segmentation to find the contour of the waterbodies (lakes, rivers).
@@ -380,7 +353,7 @@ lake_detection_vector <- function(las, rlake = NULL, tol = 1/1000, trim = 1000, 
 
   for (i in seq_along(bbox)) {
     # Get only the points in the bounding box
-    laslake <- lidR::lasclip(las, bbox[i,])
+    laslake <- lidR::clip_roi(las, bbox[i,])
 
     # Append points on the edges to avoid some edge artifact
     # (Typically a water body that belongs on an edge of the point cloud)
