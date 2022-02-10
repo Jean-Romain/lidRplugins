@@ -9,7 +9,7 @@ This package contains functions and algorithms to extend the [lidR](https://gith
 - :warning: **Not tested enought** and I'm not sure they are sufficiently robust.
 - :octocat: **Require extra packages** available on github but not on CRAN
 
-This package will NOT be submitted on CRAN and must be installed from github. It depends on `lidR (>= 3.1.0)` and should be seen as a laboratory with more or less interesting content inside.  
+This package will NOT be submitted on CRAN and must be installed from github. It depends on `lidR (>= 4.0.0)` and should be seen as a laboratory with more or less interesting content inside.  
 
 ## Features
 
