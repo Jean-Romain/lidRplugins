@@ -1,8 +1,8 @@
 #' Track the wires of the powerlines using the tower positions
 #'
-#' Assuming the coordinates, the elevation and the type of trasmission tower are known the functions
+#' Assuming the coordinates, the elevation and the type of transmission tower are known the functions
 #' tracks the wires of the powerlines. To achieve this task it computes the catenary equation of the
-#' wires between two consecutive towers. Striclty speaking the function is not able to find the wires
+#' wires between two consecutive towers. Strictly speaking the function is not able to find the wires
 #' instead it guesses their equation that can be computed deterministically from the tower coordinates,
 #' their height and their type.
 #'
@@ -50,7 +50,7 @@
 #' col[wires$virtual & col == "darkorange"] <- "goldenrod1"
 #'
 #' plot(header(las))
-#' plot(towers, add = T, col = towers$deflection + 1)
+#' plot(towers, add = TRUE, col = towers$deflection + 1)
 #' plot(wires, col = col, add = T, cex = 0.1)
 #'
 #' plot(las, clear_artifacts = FALSE)
