@@ -10,11 +10,10 @@ License: GPL-3
 Depends:
     R (>= 3.1.0),methods,lidR (>= 4.0.0)
 Imports:
-    data.table,Rcpp,rgeos,stats,fpc,lwgeom,EBImage,glue,sf,raster,sp,rgl,rgdal,RcppConcaveman,RMCC,lazyeval
+    data.table,Rcpp,rgeos,stats,fpc,lwgeom,EBImage,glue,sf,raster,sp,rgl,rgdal,RMCC,lazyeval
 Suggests: 
     velox,testthat,covr,hexbin
 Remotes:
-    Jean-Romain/RcppConcaveman,
     Jean-Romain/RMCC,
     hunzikp/velox
 LinkingTo: BH,Rcpp,RcppArmadillo,lidR
