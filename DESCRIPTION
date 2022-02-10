@@ -14,7 +14,7 @@ Imports:
 Suggests: 
     velox,testthat,covr,hexbin
 Remotes:
-    r-lidar/lidR
+    r-lidar/lidR,
     hunzikp/velox
 LinkingTo: BH,Rcpp,RcppArmadillo,lidR
 ByteCompile: true
