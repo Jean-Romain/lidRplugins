@@ -102,7 +102,7 @@ LASfile <- system.file("extdata", "Topography.laz", package="lidR")
 las <- readLAS(LASfile, filter = "-thin_with_grid 1")
 
 lake <- delineate_lakes(las, trim = 700)
-plot(las@header)
+plot(header(las))
 plot(lake, add = TRUE, col = "cornflowerblue")
 
 \dontrun{

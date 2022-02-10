@@ -79,7 +79,7 @@
 #' las <- readLAS(LASfile, filter = "-thin_with_grid 1")
 #'
 #' lake <- delineate_lakes(las, trim = 700)
-#' plot(las@header)
+#' plot(header(las))
 #' plot(lake, add = TRUE, col = "cornflowerblue")
 #'
 #' \dontrun{
@@ -142,7 +142,7 @@ delineate_lakes.LAS <- function(las, tol = 1/1000, tol2 = c(1/30*tol, 2*tol), tr
 
   # Simplify the geometry
   vlake <- rgeos::gSimplify(vlake, 1, TRUE)
-  vlake@proj4string <- las@proj4string
+  raster::crs(vlake) <- lidR::crs(las)
   return(vlake)
 }
 
