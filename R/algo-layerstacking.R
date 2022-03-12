@@ -34,7 +34,7 @@ LayerStacking = function(start = 0.5, res = 1, ws1 = 3, ws2 = 1.5, buf_size = 0.
     Z <- NULL
 
     # Page 18: layering ; fig 1a page 20
-    las    <- lidR::lasfilter(las, Z > start)
+    las    <- lidR::filter_poi(las, Z > start)
     layers <- round(las@data$Z)
     layers <- split(las@data, layers)
 
