@@ -179,7 +179,7 @@ delineate_lakes.LAScatalog <- function(las, tol = 1/1000, tol2 = c(1/30*tol, 2*t
 
     output <- do.call(rbind, output)
     output <- gMerge(output)
-    output@proj4string <- las@proj4string
+    output@proj4string <- lidR::crs(las)
   } else {
     output <- unlist(output)
   }
