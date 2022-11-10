@@ -37,10 +37,6 @@ Powerline segmentation from point cloud using `find_transmissiontowers()`, `clas
 
 `lmfauto()` is a fast algorithm for individual tree detection with 0 parameters designed to process thousands of square kilometres without supervision.
 
-### Additionnal ground classification algorithms :octocat:
-
-- `mcc()` : Evans, Jeffrey S.; Hudak, Andrew T. 2007. A multiscale curvature algorithm for classifying discrete return LiDAR in forested environments. IEEE Transactions on Geoscience and Remote Sensing. 45(4): 1029-1038.
-
 ## Installation
 
 ```r
