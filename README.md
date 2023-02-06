@@ -1,6 +1,7 @@
 ![license](https://img.shields.io/badge/Licence-GPL--3-blue.svg) 
 [![Travis build status](https://travis-ci.org/Jean-Romain/lidRplugins.svg?branch=master)](https://travis-ci.com/Jean-Romain/lidRplugins)
 [![Codecov test coverage](https://codecov.io/gh/Jean-Romain/lidRplugins/branch/master/graph/badge.svg)](https://codecov.io/gh/Jean-Romain/lidRplugins?branch=master)
+![Lifecycle:Dormant](https://img.shields.io/badge/Lifecycle-Dormant-ff7f2a)
 
 This package contains functions and algorithms to extend the [lidR](https://github.com/r-lidar/lidR) package (versions >= 4.0.0). These functions or algorithms are not yet or will not be included in the `lidR` package either because they are:
 
@@ -35,10 +36,6 @@ Powerline segmentation from point cloud using `find_transmissiontowers()`, `clas
 ### Parameter free tree detection :microscope:
 
 `lmfauto()` is a fast algorithm for individual tree detection with 0 parameters designed to process thousands of square kilometres without supervision.
-
-### Additionnal ground classification algorithms :octocat:
-
-- `mcc()` : Evans, Jeffrey S.; Hudak, Andrew T. 2007. A multiscale curvature algorithm for classifying discrete return LiDAR in forested environments. IEEE Transactions on Geoscience and Remote Sensing. 45(4): 1029-1038.
 
 ## Installation
 
