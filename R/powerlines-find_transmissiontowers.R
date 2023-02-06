@@ -123,9 +123,14 @@ find_transmissiontowers.LAS = function(las, powerline, dtm, type = c("waist-type
     pwll <- spwll[k,]
     pwlp <- spwlp[k,]
 
+    # Fix for modern crs fev 2023
+    sfpwlp <- sf::st_as_sf(pwlp)
+    sf::st_crs(sfpwlp) <- sf::NA_crs_
+    sf::st_crs(sfpwlp) <- sf::st_crs(olas)
+
     # Clip the las to work only within the buffer of the section of the powerline
     # TODO: we need only XYZ, we can save memory with a better clipping
-    las <- lidR::clip_roi(olas, pwlp)
+    las <- lidR::clip_roi(olas, sfpwlp)
     if (!is(las, "LAS")) stop("Internal error: object is not a LAS.")
     if (lidR::is.empty(las)) stop("Internal error: object LAS is empty.")
 
